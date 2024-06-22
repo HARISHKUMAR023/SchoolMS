@@ -72,11 +72,11 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
   return (
     <div className="p-4 bg-white shadow rounded-lg">
       <h2 className="text-xl font-bold mb-4">Academic Calendar</h2>
-      {/* <div className="mb-4">
+      <div className="mb-4">
         <button className="bg-red-500 text-white px-4 py-2 mr-2 rounded">Month</button>
         <button className="bg-gray-300 px-4 py-2 mr-2 rounded">Week</button>
         <button className="bg-gray-300 px-4 py-2 rounded">Day</button>
-      </div> */}
+      </div>
       {renderHeader()}
       {renderDaysOfWeek()}
       {renderCells()}

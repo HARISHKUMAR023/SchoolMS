@@ -1,47 +1,40 @@
 
 import './App.css'
-import { useState } from 'react';
+// import { useState } from 'react';
 // import Home from './pages/Home/Home';
 import Dashbord from './pages/Admin/Dashbord';
 import AddEmployee from './pages/Admin/AddEmployee';
 import AddStudent from './pages/Admin/AddStudent';
 import StudentDetalis from './pages/Admin/StudentDetalis';
 import EmployeeDetalis from './pages/Admin/EmployeeDetalis';
+import Footer from './components/comman/Footer/Fotter';
 import Navbar from './components/layout/Navbar/Navbar';
+import Login from './components/UI/Auth/Login';
+// import PrivateRoute from './components/layout/ProtectedRoute';
+// import { AuthProvider } from './context/AuthContext';
 
 import Menu from './components/layout/Menu/Menu';
 import { createBrowserRouter, RouterProvider, Outlet ,Navigate } from "react-router-dom";
 const Layout = () => {
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedDarkMode = localStorage.getItem('darkMode');
-    return savedDarkMode === 'true'; // localStorage stores everything as a string
-  });
+  // const [darkMode, setDarkMode] = useState(() => {
+  //   const savedDarkMode = localStorage.getItem('darkMode');
+  //   return savedDarkMode === 'true'; // localStorage stores everything as a string
+  // });
   // const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn )
   // if (!isLoggedIn) {
   //   return <Navigate to="/" />;
   // }
   return (
-    <div className={`max-h-screen overflow-hidden ${darkMode ? 'dark' : ''}`}>
-    <div className="bg-white dark:bg-[#1e1e1e] text-black dark:text-white flex flex-row">
-      <div className="menucontainer ">
-        <Menu />
-      </div>
-      <div className="content-Container w-full pb-4 max-h-full dark:bg-[#1e1e1e] dark:text-white">
-        {/* <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-        
-        <ToastContainer /> */}
-        <Navbar/>
-        <div className="bg-[#E5EAEF] dark:bg-[#333333] py-2 h-full overflow-y-scroll rounded-s-md">
-          {/* Adjust the height of the div below */}
-          
-            <Outlet  />
-          
+    <div className="flex bg-[#343944] flex-row overflow-hidden h-screen">
+      <Menu />
+      <div className="flex flex-col w-full dark:bg-[#1e1e1e] dark:text-white">
+        <Navbar />
+        <div className="flex-grow overflow-y-auto bg-[#E5EAEF] dark:bg-[#333333] py-2">
+          <Outlet />
         </div>
-        
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
-  </div>
   
     
   );
@@ -50,11 +43,11 @@ const Layout = () => {
 const router = createBrowserRouter([
   {
     path: "/dashboard",
-    element: <Layout />,
+    element:  <Layout />,
     children: [
       {
         path: "Dashboard",
-        element: <Dashbord/>,
+        element: <Dashbord/> ,
       },
 
       {
@@ -119,10 +112,10 @@ const router = createBrowserRouter([
 
     ],
   },
-  // {
-  //   path: "/",
-  //   element: <Login />,
-  // },
+  {
+    path: "/login",
+    element: <Login />,
+  },
 
   // {
   //   path: "/logview",

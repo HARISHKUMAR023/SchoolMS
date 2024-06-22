@@ -6,7 +6,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdGroupAdd } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 const Menu: React.FC = () => {
   const menuItems = [
     {
@@ -14,10 +14,10 @@ const Menu: React.FC = () => {
       icone: <FaUserLock className='w-5 h-5' />, // main icon for this menu item
       subMenuItems: [
         { name: 'Dashboard', link: 'Dashboard', icone: <FaUserLock className='w-5 h-5'/> },
-        { name: 'Add Student', link: 'AddStudent', icone: <IoMdPersonAdd /> },
-        { name: 'Add Employee', link: 'AddEmployee', icone: <MdGroupAdd /> },
-        { name: 'Student Details', link: 'StudentDetails', icone: <IoIosPeople /> },
-        { name: 'Employee Details', link: 'EmployeeDetails', icone: <FaPeopleGroup /> },
+        { name: 'Add Student', link: 'AddStudent', icone: <IoMdPersonAdd className='w-5 h-5' /> },
+        { name: 'Add Employee', link: 'AddEmployee', icone: <MdGroupAdd className='w-5 h-5' /> },
+        { name: 'Student Details', link: 'StudentDetails', icone: <IoIosPeople className='w-5 h-5' /> },
+        { name: 'Employee Details', link: 'EmployeeDetails', icone: <FaPeopleGroup className='w-5 h-5' /> },
       ],
     },
     {
@@ -69,10 +69,11 @@ const Menu: React.FC = () => {
 
   return (
    
-        
-<aside className="bg-gray-800 text-white w-64 h-screen">
-<Link to="#" className=' bg-red-500 text-white p-4 px-[90px]'>School MS</Link>
-      <ul className="space-y-2 p-4">
+    // bg-gray-800 text-white w-64 h-screen
+
+  <div className="w-64 bg-gray-800  overflow-y-auto ">
+  {/* <Link to="#" className=' bg-red-500 text-white p-4 px-[90px]'>School MS</Link> */}
+      <ul className=" p-4 overflow-y-auto">
         {menuItems.map((menuItem, index) => (
           <MenuItem
             key={index}
@@ -82,7 +83,8 @@ const Menu: React.FC = () => {
           />
         ))}
       </ul>
-    </aside>
+  </div>
+
    
   
     
