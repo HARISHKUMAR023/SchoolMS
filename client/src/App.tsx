@@ -9,12 +9,14 @@ import StudentDetalis from './pages/Admin/StudentDetalis';
 import EmployeeDetalis from './pages/Admin/EmployeeDetalis';
 import Footer from './components/comman/Footer/Fotter';
 import Navbar from './components/layout/Navbar/Navbar';
-import Login from './components/UI/Auth/Login';
+// import Login from './components/UI/Auth/Login';
 // import PrivateRoute from './components/layout/ProtectedRoute';
 // import { AuthProvider } from './context/AuthContext';
+import LoginPage from './components/UI/Auth/Login';
+import RegisterPage from './components/UI/Auth/Register';
 
 import Menu from './components/layout/Menu/Menu';
-import { createBrowserRouter, RouterProvider, Outlet ,Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet  } from "react-router-dom";
 const Layout = () => {
   // const [darkMode, setDarkMode] = useState(() => {
   //   const savedDarkMode = localStorage.getItem('darkMode');
@@ -114,7 +116,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginPage />,
+  },
+  {
+    path: "/reg",
+    element: <RegisterPage />,
   },
 
   // {

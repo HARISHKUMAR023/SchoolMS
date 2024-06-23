@@ -3,6 +3,8 @@ import Card from "../../components/UI/Dashbord/Card";
 import Calendar from "../../components/UI/Dashbord/Calendar";
 import SubCard from "../../components/UI/Dashbord/SubCard";
 import { FaUserGraduate, FaChalkboardTeacher, FaSchool } from 'react-icons/fa';
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store";
 import { addMonths, subMonths } from 'date-fns';
 interface CardData {
   icon: ReactElement;
@@ -16,6 +18,8 @@ const cardData: CardData[] = [
   { icon:< FaSchool className="text-blue-500 w-10 h-10"/>, text: 'Send Message', count: 30 },
 ];
 const Dashbord = () => {
+  const authState = useSelector((state: RootState) => state.auth);
+ console.log(authState.user)
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const nextMonth = () => {

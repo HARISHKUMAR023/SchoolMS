@@ -1,40 +1,45 @@
-// src/components/Register.tsx
 import React, { useState } from 'react';
-import { useAuth } from '../../../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../Store';
+import { register } from '../../../slices/authActions';
 
-const Register = () => {
-  const { register } = useAuth();
-  const [email, setEmail] = useState('');
+const RegisterPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state: RootState) => state.auth);
+  // const [name, setName] = useState('');
+  const [username, setusername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await register(email, password);
-    } catch (error) {
-      console.error('Failed to register:', error);
-    }
+  const handleRegister = () => {
+    dispatch(register( username, password));
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
+    <div>
+      <h1>Register</h1>
+      <input 
+        type="text" 
+        placeholder="Name" 
+        value={username} 
+        onChange={(e) => setusername(e.target.value)} 
       />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
+      {/* <input 
+        type="email" 
+        placeholder="Email" 
+        value={email} 
+        onChange={(e) => setEmail(e.target.value)} 
+      /> */}
+      <input 
+        type="password" 
+        placeholder="Password" 
+        value={password} 
+        onChange={(e) => setPassword(e.target.value)} 
       />
-      <button type="submit">Register</button>
-    </form>
+      <button onClick={handleRegister} disabled={isLoading}>Register</button>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+    </div>
   );
 };
 
-export default Register;
+export default RegisterPage;
