@@ -1,45 +1,38 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../Store';
-import { register } from '../../../slices/authActions';
+import  { useState } from 'react';
+import axios from 'axios';
 
-const RegisterPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state: RootState) => state.auth);
-  // const [name, setName] = useState('');
-  const [username, setusername] = useState('');
+const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('student');
 
-  const handleRegister = () => {
-    dispatch(register( username, password));
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/auth/register', { name, email, password, role });
+      localStorage.setItem('token', data.token);
+      // Redirect to dashboard or appropriate page
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <input 
-        type="text" 
-        placeholder="Name" 
-        value={username} 
-        onChange={(e) => setusername(e.target.value)} 
-      />
-      {/* <input 
-        type="email" 
-        placeholder="Email" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)} 
-      /> */}
-      <input 
-        type="password" 
-        placeholder="Password" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)} 
-      />
-      <button onClick={handleRegister} disabled={isLoading}>Register</button>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+        <option value="parent">Parent</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit">Register</button>
+    </form>
   );
 };
 
-export default RegisterPage;
+export default Register;

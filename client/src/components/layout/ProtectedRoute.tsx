@@ -1,16 +1,26 @@
-// src/components/PrivateRoute.tsx
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 
-const PrivateRoute = ({ children }: { children: JSX.Element }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <div>Loading...</div>; // or your loading spinner
-  }
-
-  return user ? children : <Navigate to="/login" />;
+type ProtectedRouteProps = {
+  children: ReactNode;
+  allowedRoles: string[];
 };
 
-export default PrivateRoute;
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+
+  const user = JSON.parse(atob(token.split('.')[1]));
+  console.log(user);
+
+  if (!allowedRoles.includes(user.role)) {
+    return <Navigate to="/unauthorized" />;
+  }
+
+  return <>{children}</>;
+};
+
+export default ProtectedRoute;
