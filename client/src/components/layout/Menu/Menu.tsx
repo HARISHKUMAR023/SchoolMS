@@ -13,12 +13,13 @@ interface MenuProps {
 const Menu: React.FC<MenuProps> = ({ role }) => {
   const menuItems = [
     {
+      
       title: 'Administration',
       icone: <FaUserLock className='w-5 h-5' />,
       subMenuItems: [
         { name: 'Dashboard', link: 'Dashboard', icone: <FaUserLock className='w-5 h-5'/> },
-        { name: 'Add Student', link: 'add-employee', icone: <IoMdPersonAdd className='w-5 h-5' /> },
-        { name: 'Add Employee', link: 'add-student', icone: <MdGroupAdd className='w-5 h-5' /> },
+        { name: 'Add Student', link: 'add-student', icone: <IoMdPersonAdd className='w-5 h-5' /> },
+        { name: 'Add Employee', link: 'add-employee', icone: <MdGroupAdd className='w-5 h-5' /> },
         { name: 'Student Details', link: 'student-details', icone: <IoIosPeople className='w-5 h-5' /> },
         { name: 'Employee Details', link: 'employee-details', icone: <FaPeopleGroup className='w-5 h-5' /> },
       ],

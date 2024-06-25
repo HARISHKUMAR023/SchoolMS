@@ -1,8 +1,10 @@
 
-
+import EmployeeForm from "../../components/UI/Employee/EmployeeForm"
 const AddEmployee = () => {
   return (
-    <div>AddEmployee</div>
+    <div>
+      <EmployeeForm />
+    </div>
   )
 }
 

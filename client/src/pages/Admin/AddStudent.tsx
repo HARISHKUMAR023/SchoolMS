@@ -1,8 +1,10 @@
 
-
+import StudentForm from "../../components/UI/Student/StudentForm"
 const AddStudent = () => {
   return (
-    <div>AddStudent</div>
+    <div>
+      <StudentForm />
+    </div>
   )
 }
 
