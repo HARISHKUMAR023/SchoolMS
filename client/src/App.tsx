@@ -7,6 +7,8 @@ import EmployeeDetalis from './pages/Admin/EmployeeDetalis';
 import Login from './components/UI/Auth/Login';
 import Register from './components/UI/Auth/Register';
 import Unauthorized from './pages/Unauthorized';
+import Attendance from './pages/Staff/Attendance';
+import AddClass from './pages/Setups/AddClass';
 import Layout from './components/layout/Layout';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './components/layout/ProtectedRoute';
@@ -61,6 +63,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['admin']}>
             <EmployeeDetalis />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "StudentAttendance",
+        element: (
+          <ProtectedRoute allowedRoles={['admin']}>
+            <Attendance />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "add-class",
+        element: (
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AddClass/>
           </ProtectedRoute>
         ),
       },

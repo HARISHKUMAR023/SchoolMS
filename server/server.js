@@ -5,6 +5,8 @@ const authRoutes = require('./routes/authRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const DashboardRoutes = require('./routes/DashboardRoutes')
 const EmployeeRoutes = require('./routes/EmployeeRoutes')
+const AttendanceRoutes = require('./routes/attendanRoutes')
+const ClassRoutes = require('./routes/ClassRoutes')
 const cors = require('cors');
 // const userRoutes = require('./routes/userRoutes');
 
@@ -24,6 +26,8 @@ app.use('/api/employees', EmployeeRoutes)
 app.use('/api/auth', authRoutes);
 app.use('/api/students' , studentRoutes)
 app.use('/api/dashboard', DashboardRoutes)
+app.use('/api/attendance', AttendanceRoutes)
+app.use('/api/classes', ClassRoutes)
 // app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;

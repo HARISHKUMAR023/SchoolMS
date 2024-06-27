@@ -6,6 +6,7 @@ const studentSchema = new Schema({
   name: { type: String, required: true },
   dob: { type: Date, required: true },
   class: { type: String, required: true },
+  section:{type:String,required:true},
   bloodGroup: { type: String, required: true },
   nationality: { type: String, required: true },
   registrationNumber: { type: String, required: true, unique: true },
