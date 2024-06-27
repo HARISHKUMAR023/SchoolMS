@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { login } from '../../../slices/authSlice';
+import  educationbg from '../../../assets/illuctration/education-concept-illustration.png';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,16 +28,23 @@ const Login = () => {
   };
 
   return (
-    <div className='flex items-center justify-center  h-screen'>
-<form onSubmit={handleSubmit} className='bg-white p-10 py-20 rounded shadow-lg shadow-amber-600'>
+    <div className='flex  justify-center items-center h-screen bg-gray-100 p-14'>
+      <div className='flex justify-between bg-white  rounded-md shadow-lg  ' >
+      <div>
+        <img src={educationbg} alt=" " className='w-96 h-96' />
+      </div>
+<form onSubmit={handleSubmit} className='bg-white px-20 py-20  rounded shadow-lg shadow-white-600 '>
+      <h1 className='text-2xl font-bold text-center mb-3 bg-blue-700 p-3  text-white '>School Ms Login</h1>
       <label htmlFor="email">Email or Username</label><br />
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className='border border-fuchsia-500' />
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Enter your Name' className='border border-gray-800 rounded-md p-2 mb-3' />
       <br />
       <label htmlFor="password">Password</label><br />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Enter your Password' className='border border-gray-800 rounded-md p-2' />
       <br />
-      <button type="submit" className='bg-red-500 text-white p-2 rounded-sm mt-4 font-semibold'>Login</button>
+      <button type="submit" className='bg-red-600 text-white p-2 rounded-md mt-4 font-semibold'>Login</button>
     </form>
+      </div>
+     
     </div>
     
   );
