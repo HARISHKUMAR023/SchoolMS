@@ -9,6 +9,7 @@ import Register from './components/UI/Auth/Register';
 import Unauthorized from './pages/Unauthorized';
 import Attendance from './pages/Staff/Attendance';
 import AddClass from './pages/Setups/AddClass';
+import UserTable from './pages/Setups/UserTable';
 import Layout from './components/layout/Layout';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './components/layout/ProtectedRoute';
@@ -82,6 +83,22 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "userTable",
+        element: (
+          <ProtectedRoute allowedRoles={['admin']}>
+            <UserTable/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Adduser",
+        element: (
+          <ProtectedRoute allowedRoles={['admin']}>
+            <Register />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   {
@@ -100,14 +117,7 @@ const router = createBrowserRouter([
       </PublicRoute>
     ),
   },
-  {
-    path: "/reg",
-    element: (
-      <PublicRoute>
-        <Register />
-      </PublicRoute>
-    ),
-  },
+ 
   {
     path: "/unauthorized",
     element: <Unauthorized />,

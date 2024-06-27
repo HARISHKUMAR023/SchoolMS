@@ -69,9 +69,11 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
       title: 'Settings',
       icone: <IoIosPeople className='w-5 h-5' />,
       subMenuItems: [
-        { name: 'Overview', link: '#/settings/overview' },
-        { name: 'Schedule', link: '#/settings/schedule' },
+        { name: 'Overview', link: '/Adduser' },
+        { name: 'Schedule', link: 'userTable' },
         { name: 'Resources', link: 'add-class' },
+        { name: 'UserManagement', link: 'userTable' },
+        { name: 'Adduser', link: 'Adduser' },
       ],
       roles: ['admin'],
     },
