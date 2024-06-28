@@ -16,6 +16,7 @@ const Navbar = () => {
       <button onClick={handleLogout} className="logout-button">
         Logout
       </button>
+      <ThemeToggle/>
       <IoMdNotifications className='size-6' />
       <h2 className=''>Harish</h2>
       <img src={proimg} alt="Profile imaga" 
