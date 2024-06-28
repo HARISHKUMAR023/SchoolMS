@@ -23,7 +23,7 @@ const Card = () => {
   };
   return (
     <div>
-         <div className="p-8 bg-gray-100 ">
+         <div className="pb-4 bg-gray-[#a0a0a0a] ">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <DashboardCard icon={<PiStudentBold size={34} />} count={studentCount} text="Total Studnet" />
         <DashboardCard icon={<MdOutlinePeopleAlt  size={34} />} count={150} text="Total Employee" />

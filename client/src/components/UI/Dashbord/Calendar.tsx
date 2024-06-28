@@ -19,13 +19,13 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
   const renderHeader = () => {
     return (
       <div className="flex justify-between items-center mb-4">
-        <button onClick={onPrevMonth} className="text-blue-500">
+        <button onClick={onPrevMonth} className="text-blue-500 dark:hover:bg-darkbg1 mx-2 px-2 rounded-lg">
           &lt;
         </button>
         <span className="text-xl font-semibold">
           {format(currentMonth, 'MMMM yyyy')}
         </span>
-        <button onClick={onNextMonth} className="text-blue-500">
+        <button onClick={onNextMonth} className="text-blue-500 dark:hover:bg-darkbg1 mx-2 px-2 rounded-lg">
           &gt;
         </button>
       </div>
@@ -43,7 +43,7 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
   };
 
   const renderCells = () => {
-    const dateFormat = 'd';
+    const dateFormat = 'dd';
     const rows: React.ReactNode[] = [];
     let daysInRow: React.ReactNode[] = [];
 
@@ -53,7 +53,7 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
 
       daysInRow.push(
         <div
-          className={`w-1/7 text-center px-[46px] py-6  ${isSameMonth ? 'text-black' : 'text-gray-400'}`}
+          className={`w-1/7 text-center px-[46px] py-6  ${isSameMonth ? 'text-black dark:text-white' : 'text-gray-400'}`}
           key={index}
         >
           {formattedDate}
@@ -70,8 +70,8 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
   };
 
   return (
-    <div className="p-4 bg-white shadow rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Academic Calendar</h2>
+    <div className="p-4 dark:bg-darkbg2 bg-white shadow rounded-lg">
+      <h2 className="text-xl font-bold mb-4 text-black dark:text-white">Academic Calendar</h2>
       <div className="mb-4">
         <button className="bg-red-500 text-white px-4 py-2 mr-2 rounded">Month</button>
         <button className="bg-gray-300 px-4 py-2 mr-2 rounded">Week</button>

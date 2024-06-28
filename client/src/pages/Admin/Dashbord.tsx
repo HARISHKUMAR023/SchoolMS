@@ -35,18 +35,22 @@ const Dashbord = () => {
       
       <div className="flex flex-row">
         <div className="basis-7/12">
-        <Calendar currentMonth={currentMonth} onNextMonth={nextMonth} onPrevMonth={prevMonth} />
+        <Calendar 
+          currentMonth={currentMonth} 
+          onNextMonth={nextMonth} 
+          onPrevMonth={prevMonth} />
+          
         </div>
      
-      <div className="basic-5/12">
-      <div className="grid grid-cols-2 gap-2">
-      {cardData.map((data, index) => (
-        <SubCard key={index} icon={data.icon} text={data.text} count={data.count}/>
+      <div className="basis-5/12 ml-2">
+        <div className="grid grid-cols-2 gap-2 bg-[#262626] mx-2 py-2 rounded-lg dark:text-black">
+          {cardData.map((data, index) => (
+            <SubCard key={index} icon={data.icon} text={data.text} count={data.count}/>
 
-      ))}
-      </div>
-     
-      </div>
+          ))}
+        </div>
+      
+        </div>
       </div>
      
     </div>
