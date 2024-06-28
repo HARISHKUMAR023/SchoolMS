@@ -30,7 +30,7 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
       icone: <IoMdPersonAdd  className='w-5 h-5'/>,
       subMenuItems: [
         { name: 'Overview', link: '#/students/overview' },
-        { name: 'Attendance', link: '#/students/attendance' },
+        { name: 'Attendance', link: 'StudentAttendance' },
         { name: 'Grades', link: '#/students/grades' },
       ],
       roles: ['admin', 'teacher'],
@@ -39,7 +39,7 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
       title: 'Teachers',
       icone: <MdGroupAdd className='w-5 h-5' />,
       subMenuItems: [
-        { name: 'Overview', link: '#/teachers/overview' },
+        { name: 'Overview', link: 'StudentAttendance' },
         { name: 'Schedule', link: '#/teachers/schedule' },
         { name: 'Performance', link: '#/teachers/performance' },
       ],
@@ -69,9 +69,11 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
       title: 'Settings',
       icone: <IoIosPeople className='w-5 h-5' />,
       subMenuItems: [
-        { name: 'Overview', link: '#/settings/overview' },
-        { name: 'Schedule', link: '#/settings/schedule' },
-        { name: 'Resources', link: '#/settings/resources' },
+        { name: 'Overview', link: '/Adduser' },
+        { name: 'Schedule', link: 'userTable' },
+        { name: 'Resources', link: 'add-class' },
+        { name: 'UserManagement', link: 'userTable' },
+        { name: 'Adduser', link: 'Adduser' },
       ],
       roles: ['admin'],
     },

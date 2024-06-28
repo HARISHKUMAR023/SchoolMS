@@ -1,14 +1,15 @@
-import React from 'react';
 import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useState, useEffect, ChangeEvent } from 'react';
 
-  import 'react-toastify/dist/ReactToastify.css';
 interface Student {
   name: string;
   dob: string;
   class: string;
+  section: string;
   bloodGroup: string;
   nationality: string;
   registrationNumber: string;
@@ -28,12 +29,36 @@ interface Student {
   };
 }
 
+interface Class {
+  _id: string;
+  name: string;
+  sections: string[];
+}
+
 const StudentForm: React.FC = () => {
+  const [classes, setClasses] = useState<Class[]>([]);
+  const [selectedClass, setSelectedClass] = useState<string>('');
+  const [selectedSection, setSelectedSection] = useState<string>('');
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/classes')
+      .then(response => {
+        setClasses(response.data);
+      })
+      .catch(error => console.log(error));
+  }, []);
+
+  const handleClassChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedClass(e.target.value);
+    setSelectedSection(''); // Reset section when class changes
+  };
+
   const formik = useFormik<Student>({
     initialValues: {
       name: '',
       dob: '',
       class: '',
+      section: '',
       bloodGroup: '',
       nationality: '',
       registrationNumber: '',
@@ -55,6 +80,7 @@ const StudentForm: React.FC = () => {
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
       dob: Yup.date().required('Date of Birth is required'),
+      section: Yup.string().required('Section is required'),
       class: Yup.string().required('Class is required'),
       bloodGroup: Yup.string().required('Blood Group is required'),
       nationality: Yup.string().required('Nationality is required'),
@@ -91,7 +117,7 @@ const StudentForm: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md">
-          <ToastContainer />
+      <ToastContainer />
       <h2 className="text-2xl font-bold mb-6">Student Information</h2>
       <form onSubmit={formik.handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -126,16 +152,32 @@ const StudentForm: React.FC = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Class</label>
-            <input
-              type="text"
-              name="class"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.class}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
+            <select value={selectedClass} onChange={handleClassChange} required className="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+              <option value="">Select Class</option>
+              {classes.map(cls => (
+                <option key={cls._id} value={cls._id}>{cls.name}</option>
+              ))}
+            </select>
             {formik.touched.class && formik.errors.class ? (
               <div className="text-red-500 text-sm">{formik.errors.class}</div>
+            ) : null}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Section</label>
+            <select
+              value={selectedSection}
+              onChange={(e) => setSelectedSection(e.target.value)}
+              required
+              disabled={!selectedClass}
+              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+            >
+              <option value="">Select Section</option>
+              {selectedClass && classes.find(cls => cls._id === selectedClass)?.sections.map((section: string) => (
+                <option key={section} value={section}>{section}</option>
+              ))}
+            </select>
+            {formik.touched.section && formik.errors.section ? (
+              <div className="text-red-500 text-sm">{formik.errors.section}</div>
             ) : null}
           </div>
           <div>
@@ -208,8 +250,6 @@ const StudentForm: React.FC = () => {
               <div className="text-red-500 text-sm">{formik.errors.phoneNumber}</div>
             ) : null}
           </div>
-
-          {/* Academic Information */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Admission Date</label>
             <input
@@ -252,8 +292,6 @@ const StudentForm: React.FC = () => {
               <div className="text-red-500 text-sm">{formik.errors.academicInfo.rollNumber}</div>
             ) : null}
           </div>
-
-          {/* Parent Details */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Father's Name</label>
             <input
@@ -325,13 +363,9 @@ const StudentForm: React.FC = () => {
             ) : null}
           </div>
         </div>
-        <button
-          type="submit"
-          className="mt-6 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-          disabled={formik.isSubmitting}
-        >
-          Submit
-        </button>
+        <div className="mt-6">
+          <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md">Submit</button>
+        </div>
       </form>
     </div>
   );
