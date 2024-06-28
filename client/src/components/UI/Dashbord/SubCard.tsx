@@ -11,14 +11,15 @@ interface SubCardProps {
 const SubCard: React.FC<SubCardProps> = ({ icon, text, count }) => {
   const IconComponent = icon as ReactElement | IconType;
   return (
-    <div className="bg-white shadow rounded-lg p-4  px-auto flex flex-col  items-center m-2 mx-6">
+    <div className="dark:bg-[#333333] dark:text-white
+                   bg-white shadow rounded-lg p-4 px-auto flex flex-col items-center m-2 mx-6 justify-center gap-y-3">
       {typeof IconComponent === 'function' ? (
         <IconComponent className="text-blue-500 w-10 h-10" />
       ) : (
         IconComponent
       )}
       <div className="ml-4">
-        <Link to="#" className="text-lg font-semibold">{text}</Link>
+        <Link to="#" className="text-lg font-semibold text-center">{text}</Link>
         <div className="text-2xl text-center">{count}</div>
       </div>
     </div>
