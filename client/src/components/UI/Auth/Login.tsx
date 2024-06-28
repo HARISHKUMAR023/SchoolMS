@@ -29,7 +29,7 @@ const Login: React.FC = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         // Error is an AxiosError
-        toast.warning(error.response?.data.message || 'An error occurred');
+        toast.error(error.response?.data.message || 'An error occurred');
       } else {
         // Error is a general error
         toast.error((error as Error).message);
