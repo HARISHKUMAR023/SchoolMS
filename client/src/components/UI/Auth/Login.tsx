@@ -42,7 +42,8 @@ const Login: React.FC = () => {
       navigate("/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.warning(error.response?.data.message || 'An error occurred');
+        // Error is an AxiosError
+        toast.error(error.response?.data.message || 'An error occurred');
       } else {
         toast.error((error as Error).message);
       }
