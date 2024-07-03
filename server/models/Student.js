@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const studentSchema = new Schema({
+  photo: { type: String, default: 'uploads/student/default-photo.jpg' } ,// Default photo
   name: { type: String, required: true },
   dob: { type: Date, required: true },
   class: { type: String, required: true },
