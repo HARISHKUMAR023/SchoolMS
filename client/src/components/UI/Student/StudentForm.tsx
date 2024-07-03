@@ -1,5 +1,19 @@
-import { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import axios from 'axios';
+
+interface AcademicInfo {
+  admissionDate: string;
+  aadhaarCardNumber: string;
+  rollNumber: string;
+}
+
+interface ParentDetails {
+  fatherName: string;
+  fatherOccupation: string;
+  motherName: string;
+  motherOccupation: string;
+  parentPhoneNumber: string;
+}
 
 interface FormData {
   photo: File | null;
@@ -12,21 +26,11 @@ interface FormData {
   registrationNumber: string;
   address: string;
   phoneNumber: string;
-  academicInfo: {
-    admissionDate: string;
-    aadhaarCardNumber: string;
-    rollNumber: string;
-  };
-  parentDetails: {
-    fatherName: string;
-    fatherOccupation: string;
-    motherName: string;
-    motherOccupation: string;
-    parentPhoneNumber: string;
-  };
+  academicInfo: AcademicInfo;
+  parentDetails: ParentDetails;
 }
 
-const StudentForm = () => {
+const StudentForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     photo: null,
     name: '',
@@ -52,49 +56,62 @@ const StudentForm = () => {
     }
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    const keys = name.split('.') as (keyof FormData | keyof AcademicInfo | keyof ParentDetails)[];
+
+    setFormData((prevData) => {
+      if (keys.length > 1) {
+        const [mainKey, subKey] = keys as [keyof FormData, keyof (AcademicInfo | ParentDetails)];
+        if (mainKey === 'academicInfo' || mainKey === 'parentDetails') {
+          return {
+            ...prevData,
+            [mainKey]: {
+              ...prevData[mainKey],
+              [subKey]: value
+            }
+          };
+        }
+      } else if (files) {
+        return {
+          ...prevData,
+          [name]: files[0]
+        };
+      } else {
+        return {
+          ...prevData,
+          [name]: value
+        };
+      }
+      return prevData; // Fallback in case no condition is met
+    });
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFormData({
-        ...formData,
-        photo: e.target.files[0]
-      });
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files && files.length > 0) {
+      setFormData((prevData) => ({
+        ...prevData,
+        photo: files[0]
+      }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const data = new FormData();
-    for (const key in formData) {
-      if (Object.prototype.hasOwnProperty.call(formData, key)) {
-        const formValue = formData[key as keyof FormData];
-
-        if (key === 'photo') {
-          // Handle file separately
-          if (formValue instanceof File) {
-            data.append(key, formValue);
-          }
-        } else if (typeof formValue === 'object' && formValue !== null) {
-          // Handle nested objects
-          for (const subKey in formValue) {
-            if (Object.prototype.hasOwnProperty.call(formValue, subKey)) {
-              data.append(`${key}.${subKey}`, formValue[subKey as keyof typeof formValue]);
-            }
-          }
-        } else {
-          // Handle other simple types
-          data.append(key, formValue as string);
-        }
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key as keyof FormData];
+      if (typeof value === 'object' && value !== null && key !== 'photo') {
+        Object.entries(value).forEach(([subKey, subValue]) => {
+          data.append(`${key}.${subKey}`, subValue as string);
+        });
+      } else if (value instanceof File) {
+        data.append(key, value);
+      } else if (typeof value === 'string') {
+        data.append(key, value);
       }
-    }
+    });
 
     try {
       const response = await axios.post('http://localhost:5000/api/students', data, {
