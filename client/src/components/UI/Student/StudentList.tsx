@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface Student {
   _id: string;
+  photo: string;
   name: string;
   dob: string;
   class: string;
@@ -23,6 +26,7 @@ const StudentList: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterClass, setFilterClass] = useState('');
   const [filterBloodGroup, setFilterBloodGroup] = useState('');
+  const printRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -82,6 +86,80 @@ const StudentList: React.FC = () => {
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const downloadPDF = async () => {
+    if (!selectedStudent || !printRef.current) return;
+
+    const input = printRef.current;
+
+    // Use html2canvas to capture the content as a canvas
+    const canvas = await html2canvas(input, {
+      useCORS: true,  // Allow cross-origin images to be loaded
+      scale: 2,  // Increase the resolution of the canvas
+      logging: true,  // Enable logging for troubleshooting
+      onclone: (clonedDoc) => {
+        // Ensure that the image is fully loaded in the cloned document
+        const images = clonedDoc.querySelectorAll('img');
+        images.forEach(img => {
+          if (!img.complete) {
+            img.onload = () => {
+              // Do nothing, just wait for the image to load
+            };
+          }
+        });
+      },
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+
+    // Define custom margins
+    const marginLeft = 10;
+    const marginTop = 10;
+    const pdfWidth = pdf.internal.pageSize.getWidth() - marginLeft * 2;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, 'PNG', marginLeft, marginTop, pdfWidth, pdfHeight);
+    pdf.save(`${selectedStudent.name}.pdf`);
+  };
+
+  const printContent = () => {
+    if (!printRef.current) return;
+  
+    const iframe = document.createElement('iframe');
+    iframe.style.position = 'absolute';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    document.body.appendChild(iframe);
+  
+    const contentWindow = iframe.contentWindow;
+    if (contentWindow) {
+      contentWindow.document.open();
+      contentWindow.document.write('<html><head><title>Print</title></head><body>');
+      contentWindow.document.write(printRef.current.innerHTML);
+      contentWindow.document.write('</body></html>');
+      contentWindow.document.close();
+  
+      // Wait for images to load
+      const images = contentWindow.document.images;
+      const imagesLoadedPromise: Promise<void>[] = Array.from(images).map(img => new Promise<void>((resolve) => {
+        if (img.complete) {
+          resolve();
+        } else {
+          img.onload = () => resolve();
+          img.onerror = () => resolve(); // Resolve on error to not block printing on image load failure
+        }
+      }));
+  
+      Promise.all(imagesLoadedPromise).then(() => {
+        contentWindow.print();
+        contentWindow.onafterprint = () => document.body.removeChild(iframe);
+      });
+    } else {
+      alert("Unable to print. Please check your browser settings.");
     }
   };
 
@@ -170,19 +248,36 @@ const StudentList: React.FC = () => {
               <h3 className="text-xl font-semibold mb-4">Student Details</h3>
               <button 
                 onClick={closeModal} 
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none"
+                className="text-gray-500 hover:text-gray-700 focus:outline-none"
               >
                 Close
               </button>
             </div>
-            <p><strong>Name:</strong> {selectedStudent.name}</p>
-            <p><strong>DOB:</strong> {selectedStudent.dob}</p>
-            <p><strong>Class:</strong> {selectedStudent.class}</p>
-            <p><strong>Blood Group:</strong> {selectedStudent.bloodGroup}</p>
-            <p><strong>Address:</strong> {selectedStudent.address}</p>
-            <p><strong>Contact:</strong> {selectedStudent.contact}</p>
-            <p><strong>Guardian Name:</strong> {selectedStudent.guardianName}</p>
-            <p><strong>Additional Details:</strong> {selectedStudent.additionalDetails}</p>
+            <div ref={printRef} className="pdf-content">
+              <img src={`http://localhost:5000/${selectedStudent.photo}`} alt={selectedStudent.name} className="student-photo w-32 h-32 border border-gray-500" />
+              <p><strong>Name:</strong> {selectedStudent.name}</p>
+              <p><strong>DOB:</strong> {selectedStudent.dob}</p>
+              <p><strong>Class:</strong> {selectedStudent.class}</p>
+              <p><strong>Blood Group:</strong> {selectedStudent.bloodGroup}</p>
+              <p><strong>Address:</strong> {selectedStudent.address}</p>
+              <p><strong>Contact:</strong> {selectedStudent.contact}</p>
+              <p><strong>Guardian Name:</strong> {selectedStudent.guardianName}</p>
+              <p><strong>Additional Details:</strong> {selectedStudent.additionalDetails}</p>
+            </div>
+            <div className="flex justify-end mt-4">
+              <button 
+                onClick={downloadPDF} 
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+              >
+                Download PDF
+              </button>
+              <button 
+                onClick={printContent} 
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                Print
+              </button>
+            </div>
           </div>
         </div>
       )}

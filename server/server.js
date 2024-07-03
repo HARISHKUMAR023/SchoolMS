@@ -1,34 +1,43 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const studentRoutes = require('./routes/studentRoutes');
-const DashboardRoutes = require('./routes/DashboardRoutes')
-const EmployeeRoutes = require('./routes/EmployeeRoutes')
-const AttendanceRoutes = require('./routes/attendanRoutes')
-const ClassRoutes = require('./routes/ClassRoutes')
+const DashboardRoutes = require('./routes/DashboardRoutes');
+const EmployeeRoutes = require('./routes/EmployeeRoutes');
+const AttendanceRoutes = require('./routes/attendanRoutes');
+const ClassRoutes = require('./routes/ClassRoutes');
 const cors = require('cors');
-// const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 connectDB();
 
 const app = express();
+
+// CORS Configuration
 const corsOptions = {
-    origin: 'http://localhost:5173/',
+    origin: 'http://localhost:5173', // Remove trailing slash
     optionsSuccessStatus: 200,
-  };
-  
-  app.use(cors());
+    credentials: true,
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Middleware to serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use(express.json());
 
-app.use('/api/employees', EmployeeRoutes)
+app.use('/api/employees', EmployeeRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/students' , studentRoutes)
-app.use('/api/dashboard', DashboardRoutes)
-app.use('/api/attendance', AttendanceRoutes)
-app.use('/api/classes', ClassRoutes)
-// app.use('/api/users', userRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/dashboard', DashboardRoutes);
+app.use('/api/attendance', AttendanceRoutes);
+app.use('/api/classes', ClassRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
