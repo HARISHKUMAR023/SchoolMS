@@ -16,10 +16,12 @@
     "@mui/x-date-pickers": "^7.7.0",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
+    "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.11",
     "firebase": "^10.12.2",
     "formik": "^2.4.6",
+    "framer-motion": "^11.2.12",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "jwt-decode": "^4.0.0",
@@ -32,6 +34,7 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "run": "^1.5.0",
+    "tailwind-merge": "^2.3.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
