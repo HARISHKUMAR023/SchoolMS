@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../slices/authSlice';
 import educationbg from '../../../assets/illuctration/education-concept-illustration.png';
-import loginbg from '../../../assets/illuctration/login_bg.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import clsx from "clsx";

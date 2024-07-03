@@ -5,6 +5,8 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdGroupAdd } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { TbSquareRoundedLetterSFilled } from "react-icons/tb";
+
 
 interface MenuProps {
   role: string | null;
@@ -81,6 +83,11 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
 
   return (
     <div className="w-72 bg-gray-800  overflow-y-auto ">
+      <div className='mr-5 flex justify-center gap-4 items-center font-semibold text-lg text-center text-white mt-5
+                      hover:text-red-500 cursor-pointer ease-in-out'>
+        <TbSquareRoundedLetterSFilled className='size-7' />
+        <p className=''>School Sync</p>
+      </div>
       <ul className=" p-4 overflow-y-auto">
         {menuItems.map((menuItem, index) => (
           menuItem.roles.includes(role || '') && (

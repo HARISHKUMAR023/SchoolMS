@@ -15,6 +15,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import PublicRoute from './components/layout/PublicRoute';
 
+
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -118,6 +119,8 @@ const router = createBrowserRouter([
       </PublicRoute>
     ),
   },
+
+  
  
   {
     path: "/unauthorized",

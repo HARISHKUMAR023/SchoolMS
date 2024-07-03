@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
+import { HiSun, HiMoon } from "react-icons/hi";
 
 const ThemeToggle = () => {
-  // Initialize the theme state based on localStorage
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
+  const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('darkMode');
     return savedTheme ? JSON.parse(savedTheme) : false;
   });
 
-  // Apply the theme class to the body
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -16,7 +15,6 @@ const ThemeToggle = () => {
     }
   }, [darkMode]);
 
-  // Toggle the theme and save the preference in localStorage
   const toggleTheme = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
@@ -34,16 +32,20 @@ const ThemeToggle = () => {
           checked={darkMode}
           onChange={toggleTheme}
         />
-        <div className="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-gray-700 dark:bg-gray-700 peer dark:peer-checked:bg-gray-200">
-          <div
-            className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
-              darkMode ? 'translate-x-5 bg-gray-800' : 'translate-x-0 bg-white'
+        <div className="relative w-11 h-[19px] bg-gray-200 rounded-full peer-checked:bg-gray-700 dark:bg-gray-700 peer dark:peer-checked:bg-gray-200">
+          <div id='topdiv'
+            className={`z-50 w-5 h-5 absolute -mt-[1.2px] bg-white rounded-full shadow-md transform transition-transform ${
+              darkMode ? 'translate-x-6 bg-gray-800' : 'translate-x-0 bg-gray-700'
             }`}
           ></div>
+          <div id='bgdiv' className='z-30 mt-[1.5px] pr-0.5 flex justify-between ml-[2px]'>
+            <HiSun className='text-yellow-500'/> 
+            <HiMoon  className=''/>
+          </div>
         </div>
-        <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+        {/* <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
           {darkMode ? 'Dark Mode' : 'Light Mode'}
-        </span>
+        </span> */}
       </label>
     </div>
   );
