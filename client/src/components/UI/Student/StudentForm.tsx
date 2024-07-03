@@ -1,11 +1,8 @@
-import { useFormik, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
+import { useState } from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useState, useEffect, ChangeEvent } from 'react';
 
-interface Student {
+interface FormData {
+  photo: File | null;
   name: string;
   dob: string;
   class: string;
@@ -29,345 +26,164 @@ interface Student {
   };
 }
 
-interface Class {
-  _id: string;
-  name: string;
-  sections: string[];
-}
-
-const StudentForm: React.FC = () => {
-  const [classes, setClasses] = useState<Class[]>([]);
-  const [selectedClass, setSelectedClass] = useState<string>('');
-  const [selectedSection, setSelectedSection] = useState<string>('');
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/classes')
-      .then(response => {
-        setClasses(response.data);
-      })
-      .catch(error => console.log(error));
-  }, []);
-
-  const handleClassChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedClass(e.target.value);
-    setSelectedSection(''); // Reset section when class changes
-  };
-
-  const formik = useFormik<Student>({
-    initialValues: {
-      name: '',
-      dob: '',
-      class: '',
-      section: '',
-      bloodGroup: '',
-      nationality: '',
-      registrationNumber: '',
-      address: '',
-      phoneNumber: '',
-      academicInfo: {
-        admissionDate: '',
-        aadhaarCardNumber: '',
-        rollNumber: '',
-      },
-      parentDetails: {
-        fatherName: '',
-        fatherOccupation: '',
-        motherName: '',
-        motherOccupation: '',
-        parentPhoneNumber: '',
-      },
+const StudentForm = () => {
+  const [formData, setFormData] = useState<FormData>({
+    photo: null,
+    name: '',
+    dob: '',
+    class: '',
+    section: '',
+    bloodGroup: '',
+    nationality: '',
+    registrationNumber: '',
+    address: '',
+    phoneNumber: '',
+    academicInfo: {
+      admissionDate: '',
+      aadhaarCardNumber: '',
+      rollNumber: ''
     },
-    validationSchema: Yup.object({
-      name: Yup.string().required('Name is required'),
-      dob: Yup.date().required('Date of Birth is required'),
-      section: Yup.string().required('Section is required'),
-      class: Yup.string().required('Class is required'),
-      bloodGroup: Yup.string().required('Blood Group is required'),
-      nationality: Yup.string().required('Nationality is required'),
-      registrationNumber: Yup.string().required('Registration Number is required'),
-      address: Yup.string().required('Address is required'),
-      phoneNumber: Yup.string().required('Phone Number is required').min(10, 'Phone Number must be at least 10 characters'),
-      academicInfo: Yup.object({
-        admissionDate: Yup.date().required('Admission Date is required'),
-        aadhaarCardNumber: Yup.string().required('Aadhaar Card Number is required'),
-        rollNumber: Yup.string().required('Roll Number is required'),
-      }),
-      parentDetails: Yup.object({
-        fatherName: Yup.string().required('Father\'s Name is required'),
-        fatherOccupation: Yup.string().required('Father\'s Occupation is required'),
-        motherName: Yup.string().required('Mother\'s Name is required'),
-        motherOccupation: Yup.string().required('Mother\'s Occupation is required'),
-        parentPhoneNumber: Yup.string().required('Parent Phone Number is required').min(10, 'Parent Phone Number must be at least 10 characters'),
-      }),
-    }),
-    onSubmit: async (values: Student, { setSubmitting, resetForm }: FormikHelpers<Student>) => {
-      try {
-        const response = await axios.post('http://localhost:5000/api/students', values);
-        console.log(response.data);
-        toast.success('Student added successfully!');
-        resetForm();
-      } catch (error) {
-        console.error('There was an error submitting the form!', error);
-        toast.error('There was an error submitting the form!');
-      } finally {
-        setSubmitting(false);
-      }
-    },
+    parentDetails: {
+      fatherName: '',
+      fatherOccupation: '',
+      motherName: '',
+      motherOccupation: '',
+      parentPhoneNumber: ''
+    }
   });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFormData({
+        ...formData,
+        photo: e.target.files[0]
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    for (const key in formData) {
+      if (Object.prototype.hasOwnProperty.call(formData, key)) {
+        const formValue = formData[key as keyof FormData];
+
+        if (key === 'photo') {
+          // Handle file separately
+          if (formValue instanceof File) {
+            data.append(key, formValue);
+          }
+        } else if (typeof formValue === 'object' && formValue !== null) {
+          // Handle nested objects
+          for (const subKey in formValue) {
+            if (Object.prototype.hasOwnProperty.call(formValue, subKey)) {
+              data.append(`${key}.${subKey}`, formValue[subKey as keyof typeof formValue]);
+            }
+          }
+        } else {
+          // Handle other simple types
+          data.append(key, formValue as string);
+        }
+      }
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/students', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <ToastContainer />
-      <h2 className="text-2xl font-bold mb-6">Student Information</h2>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Student Basic Information */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Name</label>
-            <input
-              type="text"
-              name="name"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.name}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.name && formik.errors.name ? (
-              <div className="text-red-500 text-sm">{formik.errors.name}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
-            <input
-              type="date"
-              name="dob"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.dob}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.dob && formik.errors.dob ? (
-              <div className="text-red-500 text-sm">{formik.errors.dob}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Class</label>
-            <select value={selectedClass} onChange={handleClassChange} required className="mt-1 p-2 block w-full border border-gray-300 rounded-md">
-              <option value="">Select Class</option>
-              {classes.map(cls => (
-                <option key={cls._id} value={cls._id}>{cls.name}</option>
-              ))}
-            </select>
-            {formik.touched.class && formik.errors.class ? (
-              <div className="text-red-500 text-sm">{formik.errors.class}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Section</label>
-            <select
-              value={selectedSection}
-              onChange={(e) => setSelectedSection(e.target.value)}
-              required
-              disabled={!selectedClass}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            >
-              <option value="">Select Section</option>
-              {selectedClass && classes.find(cls => cls._id === selectedClass)?.sections.map((section: string) => (
-                <option key={section} value={section}>{section}</option>
-              ))}
-            </select>
-            {formik.touched.section && formik.errors.section ? (
-              <div className="text-red-500 text-sm">{formik.errors.section}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Blood Group</label>
-            <input
-              type="text"
-              name="bloodGroup"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.bloodGroup}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.bloodGroup && formik.errors.bloodGroup ? (
-              <div className="text-red-500 text-sm">{formik.errors.bloodGroup}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Nationality</label>
-            <input
-              type="text"
-              name="nationality"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.nationality}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.nationality && formik.errors.nationality ? (
-              <div className="text-red-500 text-sm">{formik.errors.nationality}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Registration Number</label>
-            <input
-              type="text"
-              name="registrationNumber"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.registrationNumber}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.registrationNumber && formik.errors.registrationNumber ? (
-              <div className="text-red-500 text-sm">{formik.errors.registrationNumber}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Address</label>
-            <input
-              type="text"
-              name="address"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.address}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.address && formik.errors.address ? (
-              <div className="text-red-500 text-sm">{formik.errors.address}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-            <input
-              type="text"
-              name="phoneNumber"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.phoneNumber}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-              <div className="text-red-500 text-sm">{formik.errors.phoneNumber}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Admission Date</label>
-            <input
-              type="date"
-              name="academicInfo.admissionDate"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.academicInfo.admissionDate}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.academicInfo?.admissionDate && formik.errors.academicInfo?.admissionDate ? (
-              <div className="text-red-500 text-sm">{formik.errors.academicInfo.admissionDate}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Aadhaar Card Number</label>
-            <input
-              type="text"
-              name="academicInfo.aadhaarCardNumber"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.academicInfo.aadhaarCardNumber}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.academicInfo?.aadhaarCardNumber && formik.errors.academicInfo?.aadhaarCardNumber ? (
-              <div className="text-red-500 text-sm">{formik.errors.academicInfo.aadhaarCardNumber}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Roll Number</label>
-            <input
-              type="text"
-              name="academicInfo.rollNumber"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.academicInfo.rollNumber}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.academicInfo?.rollNumber && formik.errors.academicInfo?.rollNumber ? (
-              <div className="text-red-500 text-sm">{formik.errors.academicInfo.rollNumber}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Father's Name</label>
-            <input
-              type="text"
-              name="parentDetails.fatherName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.parentDetails.fatherName}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.parentDetails?.fatherName && formik.errors.parentDetails?.fatherName ? (
-              <div className="text-red-500 text-sm">{formik.errors.parentDetails.fatherName}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Father's Occupation</label>
-            <input
-              type="text"
-              name="parentDetails.fatherOccupation"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.parentDetails.fatherOccupation}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.parentDetails?.fatherOccupation && formik.errors.parentDetails?.fatherOccupation ? (
-              <div className="text-red-500 text-sm">{formik.errors.parentDetails.fatherOccupation}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Mother's Name</label>
-            <input
-              type="text"
-              name="parentDetails.motherName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.parentDetails.motherName}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.parentDetails?.motherName && formik.errors.parentDetails?.motherName ? (
-              <div className="text-red-500 text-sm">{formik.errors.parentDetails.motherName}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Mother's Occupation</label>
-            <input
-              type="text"
-              name="parentDetails.motherOccupation"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.parentDetails.motherOccupation}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.parentDetails?.motherOccupation && formik.errors.parentDetails?.motherOccupation ? (
-              <div className="text-red-500 text-sm">{formik.errors.parentDetails.motherOccupation}</div>
-            ) : null}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Parent Phone Number</label>
-            <input
-              type="text"
-              name="parentDetails.parentPhoneNumber"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.parentDetails.parentPhoneNumber}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.parentDetails?.parentPhoneNumber && formik.errors.parentDetails?.parentPhoneNumber ? (
-              <div className="text-red-500 text-sm">{formik.errors.parentDetails.parentPhoneNumber}</div>
-            ) : null}
-          </div>
-        </div>
-        <div className="mt-6">
-          <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md">Submit</button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Photo:</label>
+        <input type="file" name="photo" onChange={handleFileChange} />
+      </div>
+      <div>
+        <label>Name:</label>
+        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Date of Birth:</label>
+        <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Class:</label>
+        <input type="text" name="class" value={formData.class} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Section:</label>
+        <input type="text" name="section" value={formData.section} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Blood Group:</label>
+        <input type="text" name="bloodGroup" value={formData.bloodGroup} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Nationality:</label>
+        <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Registration Number:</label>
+        <input type="text" name="registrationNumber" value={formData.registrationNumber} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Address:</label>
+        <input type="text" name="address" value={formData.address} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Phone Number:</label>
+        <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Admission Date:</label>
+        <input type="date" name="academicInfo.admissionDate" value={formData.academicInfo.admissionDate} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Aadhaar Card Number:</label>
+        <input type="text" name="academicInfo.aadhaarCardNumber" value={formData.academicInfo.aadhaarCardNumber} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Roll Number:</label>
+        <input type="text" name="academicInfo.rollNumber" value={formData.academicInfo.rollNumber} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Father's Name:</label>
+        <input type="text" name="parentDetails.fatherName" value={formData.parentDetails.fatherName} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Father's Occupation:</label>
+        <input type="text" name="parentDetails.fatherOccupation" value={formData.parentDetails.fatherOccupation} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Mother's Name:</label>
+        <input type="text" name="parentDetails.motherName" value={formData.parentDetails.motherName} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Mother's Occupation:</label>
+        <input type="text" name="parentDetails.motherOccupation" value={formData.parentDetails.motherOccupation} onChange={handleChange} required />
+      </div>
+      <div>
+        <label>Parent's Phone Number:</label>
+        <input type="text" name="parentDetails.parentPhoneNumber" value={formData.parentDetails.parentPhoneNumber} onChange={handleChange} required />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 
