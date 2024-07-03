@@ -168,7 +168,7 @@ const StudentList: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="container mx-auto py-6 px-4 dark:bg-darkbg2 rounded">
       <h2 className="text-2xl font-bold mb-6 text-center">Student List</h2>
       <div className="mb-4 flex justify-between">
         <input 
@@ -176,25 +176,25 @@ const StudentList: React.FC = () => {
           placeholder="Search by name" 
           value={searchTerm} 
           onChange={handleSearch} 
-          className="border p-2 rounded"
+          className="p-2 rounded dark:bg-white/10 outline-none dark:text-white"
         />
-        <select value={filterClass} onChange={handleFilterClass} className="border p-2 rounded">
-          <option value="">All Classes</option>
-          <option value="Class 1">Class 1</option>
-          <option value="Class 2">Class 2</option>
+        <select value={filterClass} onChange={handleFilterClass} className="p-2 rounded dark:bg-white/10 outline-none">
+          <option className='dark:text-black dark:bg-white/10' value="">All Classes</option>
+          <option className='dark:text-black dark:bg-white/10' value="Class 1">Class 1</option>
+          <option className='dark:text-black dark:bg-white/10' value="Class 2">Class 2</option>
           {/* Add more class options as needed */}
         </select>
-        <select value={filterBloodGroup} onChange={handleFilterBloodGroup} className="border p-2 rounded">
-          <option value="">All Blood Groups</option>
-          <option value="A+">A+</option>
-          <option value="B+">B+</option>
+        <select value={filterBloodGroup} onChange={handleFilterBloodGroup} className="p-2 rounded dark:bg-white/10 outline-none">
+          <option className='dark:text-black dark:bg-white/10' value="">All Blood Groups</option>
+          <option className='dark:text-black dark:bg-white/10' value="A+">A+</option>
+          <option className='dark:text-black dark:bg-white/10' value="B+">B+</option>
           {/* Add more blood group options as needed */}
         </select>
       </div>
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <table className="min-w-full bg-white">
+      <div className="bg-white dark:bg-white/10 shadow-md rounded overflow-hidden">
+        <table className="min-w-full ">
           <thead>
-            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <tr className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">Name</th>
               <th className="py-3 px-6 text-left">DOB</th>
               <th className="py-3 px-6 text-left">Class</th>
@@ -202,9 +202,9 @@ const StudentList: React.FC = () => {
               <th className="py-3 px-6 text-left">Actions</th>
             </tr>
           </thead>
-          <tbody className="text-gray-600 text-sm font-light">
+          <tbody className="text-gray-600 text-sm  dark:text-white">
             {currentStudents.map((student) => (
-              <tr className="border-b border-gray-200 hover:bg-gray-100" key={student._id}>
+              <tr className="border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-white/10 " key={student._id}>
                 <td className="py-3 px-6 text-left">{student.name}</td>
                 <td className="py-3 px-6 text-left">{student.dob}</td>
                 <td className="py-3 px-6 text-left">{student.class}</td>
@@ -212,7 +212,7 @@ const StudentList: React.FC = () => {
                 <td className="py-3 px-6 text-left">
                   <button 
                     onClick={() => handleViewMore(student)} 
-                    className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                    className="text-blue-500 dark:text-blue-400 hover:text-blue-700 focus:outline-none"
                   >
                     View More
                   </button>
