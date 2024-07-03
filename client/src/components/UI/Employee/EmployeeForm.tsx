@@ -93,241 +93,249 @@ const EmployeeForm: React.FC = () => {
   });
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-6xl mx-auto p-6 bg-white dark:bg-white/10 shadow-black rounded-lg shadow-md">
          <ToastContainer />
       <h2 className="text-2xl font-bold mb-4">Employee Form</h2>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            type="text"
-            name="name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          />
-          {formik.touched.name && formik.errors.name ? (
-            <div className="text-red-500 text-sm">{formik.errors.name}</div>
-          ) : null}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
-          <input
-            type="date"
-            name="dob"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.dob}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          />
-          {formik.touched.dob && formik.errors.dob ? (
-            <div className="text-red-500 text-sm">{formik.errors.dob}</div>
-          ) : null}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Address</label>
-          <input
-            type="text"
-            name="address"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.address}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          />
-          {formik.touched.address && formik.errors.address ? (
-            <div className="text-red-500 text-sm">{formik.errors.address}</div>
-          ) : null}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-          <input
-            type="text"
-            name="phoneNumber"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phoneNumber}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          />
-          {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-            <div className="text-red-500 text-sm">{formik.errors.phoneNumber}</div>
-          ) : null}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            name="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500 text-sm">{formik.errors.email}</div>
-          ) : null}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Joining Date</label>
-          <input
-            type="date"
-            name="joiningDate"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.joiningDate}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          />
-          {formik.touched.joiningDate && formik.errors.joiningDate ? (
-            <div className="text-red-500 text-sm">{formik.errors.joiningDate}</div>
-          ) : null}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Employee Type</label>
-          <select
-            name="employeeType"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.employeeType}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          >
-            <option value="teacher">Teacher</option>
-            <option value="driver">Driver</option>
-            <option value="conductor">Conductor</option>
-            <option value="other">Other</option>
-          </select>
-          {formik.touched.employeeType && formik.errors.employeeType ? (
-            <div className="text-red-500 text-sm">{formik.errors.employeeType}</div>
-          ) : null}
-        </div>
-        {formik.values.employeeType === 'teacher' && (
-          <>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Subject</label>
-              <input
-                type="text"
-                name="typeSpecificInfo.subject"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.typeSpecificInfo.subject}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
-              {formik.touched.typeSpecificInfo?.subject && formik.errors.typeSpecificInfo?.subject ? (
-                <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.subject}</div>
-              ) : null}
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Qualification</label>
-              <input
-                type="text"
-                name="typeSpecificInfo.qualification"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.typeSpecificInfo.qualification}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
-              {formik.touched.typeSpecificInfo?.qualification && formik.errors.typeSpecificInfo?.qualification ? (
-                <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.qualification}</div>
-              ) : null}
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Experience</label>
-              <input
-                type="number"
-                name="typeSpecificInfo.experience"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.typeSpecificInfo.experience}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
-              {formik.touched.typeSpecificInfo?.experience && formik.errors.typeSpecificInfo?.experience ? (
-                <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.experience}</div>
-              ) : null}
-            </div>
-          </>
-        )}
-        {formik.values.employeeType === 'driver' && (
-          <>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">License Number</label>
-              <input
-                type="text"
-                name="typeSpecificInfo.licenseNumber"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.typeSpecificInfo.licenseNumber}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
-              {formik.touched.typeSpecificInfo?.licenseNumber && formik.errors.typeSpecificInfo?.licenseNumber ? (
-                <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.licenseNumber}</div>
-              ) : null}
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Route Number</label>
-              <input
-                type="text"
-                name="typeSpecificInfo.routeNumber"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.typeSpecificInfo.routeNumber}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
-              {formik.touched.typeSpecificInfo?.routeNumber && formik.errors.typeSpecificInfo?.routeNumber ? (
-                <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.routeNumber}</div>
-              ) : null}
-            </div>
-          </>
-        )}
-        {formik.values.employeeType === 'conductor' && (
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Bus Number</label>
-            <input
-              type="text"
-              name="typeSpecificInfo.busNumber"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.typeSpecificInfo.busNumber}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-            />
-            {formik.touched.typeSpecificInfo?.busNumber && formik.errors.typeSpecificInfo?.busNumber ? (
-              <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.busNumber}</div>
-            ) : null}
+      <form onSubmit={formik.handleSubmit} className=''>
+        <div id='full' className='flex w-full gap-x-8'>
+          <div id='left' className='w-full'>
+              <div className="mb-4">
+                <label className="block text-sm font-medium dark:text-white text-gray-700">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.name}
+                  className=" mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                />
+                {formik.touched.name && formik.errors.name ? (
+                  <div className="mt-1 rounded-full text-red-500 text-sm">{formik.errors.name}</div>
+                ) : null}
+              </div>
+              <div className="mb-4">
+                <label className="dark:text-white block text-sm font-medium text-gray-700">Date of Birth</label>
+                <input
+                  type="date"
+                  name="dob"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.dob}
+                  className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                />
+                {formik.touched.dob && formik.errors.dob ? (
+                  <div className="text-red-500 text-sm">{formik.errors.dob}</div>
+                ) : null}
+              </div>
+              <div className="mb-4">
+                <label className="dark:text-white block text-sm font-medium text-gray-700">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.address}
+                  className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                />
+                {formik.touched.address && formik.errors.address ? (
+                  <div className="text-red-500 text-sm">{formik.errors.address}</div>
+                ) : null}
+              </div>
+              <div className="mb-4">
+                <label className="dark:text-white block text-sm font-medium text-gray-700">Phone Number</label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.phoneNumber}
+                  className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                />
+                {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
+                  <div className="text-red-500 text-sm">{formik.errors.phoneNumber}</div>
+                ) : null}
+              </div>
+              <div className="mb-4">
+                <label className="dark:text-white block text-sm font-medium text-gray-700">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                ) : null}
+              </div>
+              
           </div>
-        )}
-        {formik.values.employeeType === 'other' && (
-          <>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Department</label>
-              <input
-                type="text"
-                name="typeSpecificInfo.department"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.typeSpecificInfo.department}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
-              {formik.touched.typeSpecificInfo?.department && formik.errors.typeSpecificInfo?.department ? (
-                <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.department}</div>
-              ) : null}
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Role</label>
-              <input
-                type="text"
-                name="typeSpecificInfo.role"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.typeSpecificInfo.role}
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-              />
-              {formik.touched.typeSpecificInfo?.role && formik.errors.typeSpecificInfo?.role ? (
-                <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.role}</div>
-              ) : null}
-            </div>
-          </>
-        )}
+        
+          <div id='right' className='w-full'>
+          <div className="mb-4">
+                <label className="dark:text-white block text-sm font-medium text-gray-700">Joining Date</label>
+                <input
+                  type="date"
+                  name="joiningDate"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.joiningDate}
+                  className=" mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                />
+                {formik.touched.joiningDate && formik.errors.joiningDate ? (
+                  <div className="text-red-500 text-sm">{formik.errors.joiningDate}</div>
+                ) : null}
+              </div>
+              <div className="mb-4">
+                <label className="dark:text-white block text-sm font-medium text-gray-700">Employee Type</label>
+                <select
+                  name="employeeType"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.employeeType}
+                  className="cursor-pointer mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                >
+                  <option value="teacher">Teacher</option>
+                  <option value="driver">Driver</option>
+                  <option value="conductor">Conductor</option>
+                  <option value="other">Other</option>
+                </select>
+                {formik.touched.employeeType && formik.errors.employeeType ? (
+                  <div className="text-red-500 text-sm">{formik.errors.employeeType}</div>
+                ) : null}
+              </div>
+              {formik.values.employeeType === 'teacher' && (
+                <>
+                  <div className="mb-4">
+                    <label className="dark:text-white block text-sm font-medium text-gray-700">Subject</label>
+                    <input
+                      type="text"
+                      name="typeSpecificInfo.subject"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.typeSpecificInfo.subject}
+                      className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                    />
+                    {formik.touched.typeSpecificInfo?.subject && formik.errors.typeSpecificInfo?.subject ? (
+                      <div className="dark:text-red-400 text-red-500 text-sm">{formik.errors.typeSpecificInfo.subject}</div>
+                    ) : null}
+                  </div>
+                  <div className="mb-4">
+                    <label className=" dark:text-white block text-sm font-medium text-gray-700">Qualification</label>
+                    <input
+                      type="text"
+                      name="typeSpecificInfo.qualification"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.typeSpecificInfo.qualification}
+                      className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                    />
+                    {formik.touched.typeSpecificInfo?.qualification && formik.errors.typeSpecificInfo?.qualification ? (
+                      <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.qualification}</div>
+                    ) : null}
+                  </div>
+                  <div className="mb-4">
+                    <label className="dark:text-white block text-sm font-medium text-gray-700">Experience</label>
+                    <input
+                      type="number"
+                      name="typeSpecificInfo.experience"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.typeSpecificInfo.experience}
+                      className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                    />
+                    {formik.touched.typeSpecificInfo?.experience && formik.errors.typeSpecificInfo?.experience ? (
+                      <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.experience}</div>
+                    ) : null}
+                  </div>
+                </>
+              )}
+              {formik.values.employeeType === 'driver' && (
+                <>
+                  <div className="mb-4">
+                    <label className="dark:text-white block text-sm font-medium text-gray-700">License Number</label>
+                    <input
+                      type="text"
+                      name="typeSpecificInfo.licenseNumber"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.typeSpecificInfo.licenseNumber}
+                      className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                    />
+                    {formik.touched.typeSpecificInfo?.licenseNumber && formik.errors.typeSpecificInfo?.licenseNumber ? (
+                      <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.licenseNumber}</div>
+                    ) : null}
+                  </div>
+                  <div className="mb-4">
+                    <label className="dark:text-white block text-sm font-medium text-gray-700">Route Number</label>
+                    <input
+                      type="text"
+                      name="typeSpecificInfo.routeNumber"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.typeSpecificInfo.routeNumber}
+                      className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                    />
+                    {formik.touched.typeSpecificInfo?.routeNumber && formik.errors.typeSpecificInfo?.routeNumber ? (
+                      <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.routeNumber}</div>
+                    ) : null}
+                  </div>
+                </>
+              )}
+              {formik.values.employeeType === 'conductor' && (
+                <div className="mb-4">
+                  <label className="dark:text-white block text-sm font-medium text-gray-700">Bus Number</label>
+                  <input
+                    type="text"
+                    name="typeSpecificInfo.busNumber"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.typeSpecificInfo.busNumber}
+                    className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                  />
+                  {formik.touched.typeSpecificInfo?.busNumber && formik.errors.typeSpecificInfo?.busNumber ? (
+                    <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.busNumber}</div>
+                  ) : null}
+                </div>
+              )}
+              {formik.values.employeeType === 'other' && (
+                <>
+                  <div className="mb-4">
+                    <label className="dark:text-white block text-sm font-medium text-gray-700">Department</label>
+                    <input
+                      type="text"
+                      name="typeSpecificInfo.department"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.typeSpecificInfo.department}
+                      className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                    />
+                    {formik.touched.typeSpecificInfo?.department && formik.errors.typeSpecificInfo?.department ? (
+                      <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.department}</div>
+                    ) : null}
+                  </div>
+                  <div className="mb-4">
+                    <label className="dark:text-white block text-sm font-medium text-gray-700">Role</label>
+                    <input
+                      type="text"
+                      name="typeSpecificInfo.role"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.typeSpecificInfo.role}
+                      className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                    />
+                    {formik.touched.typeSpecificInfo?.role && formik.errors.typeSpecificInfo?.role ? (
+                      <div className="text-red-500 text-sm">{formik.errors.typeSpecificInfo.role}</div>
+                    ) : null}
+                  </div>
+                </>
+              )}
+          </div>
+        </div>
         <button
           type="submit"
-          className="mt-4 p-2 bg-red-500 text-white rounded-md"
+          className="mt-4 p-2 bg-red-500 hover:bg-red-600 text-white rounded-md"
         >
           Submit
         </button>
