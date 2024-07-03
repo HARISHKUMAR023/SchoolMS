@@ -168,7 +168,7 @@ const StudentList: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 dark:bg-darkbg2 rounded">
+    <div className="container mx-auto py-6 px-4 dark:bg-darkbg2 bg-primarybg rounded-lg shadow max-h-full">
       <h2 className="text-2xl font-bold mb-6 text-center">Student List</h2>
       <div className="mb-4 flex justify-between">
         <input 
@@ -176,15 +176,15 @@ const StudentList: React.FC = () => {
           placeholder="Search by name" 
           value={searchTerm} 
           onChange={handleSearch} 
-          className="p-2 rounded dark:bg-white/10 outline-none dark:text-white"
+          className="p-2 rounded dark:bg-white/10 outline-none bg-gray-200/60 dark:text-white"
         />
-        <select value={filterClass} onChange={handleFilterClass} className="p-2 rounded dark:bg-white/10 outline-none">
+        <select value={filterClass} onChange={handleFilterClass} className="p-2 rounded bg-gray-200/60  dark:bg-white/10 outline-none">
           <option className='dark:text-black dark:bg-white/10' value="">All Classes</option>
           <option className='dark:text-black dark:bg-white/10' value="Class 1">Class 1</option>
           <option className='dark:text-black dark:bg-white/10' value="Class 2">Class 2</option>
           {/* Add more class options as needed */}
         </select>
-        <select value={filterBloodGroup} onChange={handleFilterBloodGroup} className="p-2 rounded dark:bg-white/10 outline-none">
+        <select value={filterBloodGroup} onChange={handleFilterBloodGroup} className="p-2 rounded bg-gray-200/60 dark:bg-white/10 outline-none">
           <option className='dark:text-black dark:bg-white/10' value="">All Blood Groups</option>
           <option className='dark:text-black dark:bg-white/10' value="A+">A+</option>
           <option className='dark:text-black dark:bg-white/10' value="B+">B+</option>
