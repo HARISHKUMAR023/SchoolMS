@@ -6,7 +6,7 @@ import { MdGroupAdd } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { TbSquareRoundedLetterSFilled } from "react-icons/tb";
-import { RiArrowLeftWideLine, RiArrowRightWideLine } from "react-icons/ri";
+import { RiArrowLeftWideLine } from "react-icons/ri";
 
 
 interface MenuProps {
@@ -91,8 +91,8 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
 
   return (
     <div
-      className={`w-72 dark:bg-darkbg2 overflow-y-auto ${
-        isExpanded ? "" : "w-20" }`}  >
+      className={` dark:bg-darkbg2 overflow-y-auto ${
+        isExpanded ? "w-72" : "w-28" }`}  >
       <div
           className="pl-10 mr-5 flex justify-center gap-4 items-center font-semibold text-lg text-center text-white mt-5
                       hover:text-red-500 cursor-pointer ease-in-out "
@@ -111,7 +111,7 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
         className="text-white hover:text-red-500 cursor-pointer ml-auto mr-1"
         onClick={toggleMenu}
       >
-        {isExpanded ? <RiArrowLeftWideLine /> : <RiArrowRightWideLine />}
+        {isExpanded ? <RiArrowLeftWideLine /> : <RiArrowLeftWideLine className='rotate-180 ' />}
       </button>
       
       </div>
