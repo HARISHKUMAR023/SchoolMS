@@ -2,15 +2,25 @@ import { useState, useEffect, FormEvent } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../../../slices/authSlice';
+import { login, setTeacherId } from '../../../slices/authSlice';
 import educationbg from '../../../assets/illuctration/education-concept-illustration.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import clsx from "clsx";
-
+import clsx from 'clsx';
+import { jwtDecode } from "jwt-decode";
 interface LoginResponse {
   token: string;
 }
+
+const fetchTeacherId = async (userId: string) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/employees/user/${userId}`);
+    return response.data.teacherId; // Adjust based on your API response
+  } catch (error) {
+    console.error('Error fetching teacher ID:', error);
+    return null;
+  }
+};
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -21,9 +31,9 @@ const Login: React.FC = () => {
     const screenWidth = window.innerWidth - 350;
     const styles = [...new Array(20)].map(() => ({
       top: -5,
-      left: Math.floor(Math.random() * screenWidth) + "px",
-      animationDelay: Math.random() * 1 + 0.2 + "s",
-      animationDuration: Math.floor(Math.random() * 8 + 2) + "s",
+      left: Math.floor(Math.random() * screenWidth) + 'px',
+      animationDelay: Math.random() * 1 + 0.2 + 's',
+      animationDuration: Math.floor(Math.random() * 8 + 2) + 's',
     }));
     setMeteorStyles(styles);
   }, []);
@@ -38,10 +48,20 @@ const Login: React.FC = () => {
       const { token } = data;
       dispatch(login({ token }));
       localStorage.setItem('token', data.token);
-      navigate("/dashboard");
+
+      const decodedToken = jwtDecode<{ role: string, id: string }>(token); // Adjust based on your token structure
+      if (decodedToken.role === 'teacher') {
+        const teacherId = await fetchTeacherId(decodedToken.id);
+        if (teacherId) {
+          dispatch(setTeacherId(teacherId));
+        } else {
+          console.error('No teacher ID found for this user');
+        }
+      }
+
+      navigate('/dashboard');
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Error is an AxiosError
         toast.error(error.response?.data.message || 'An error occurred');
       } else {
         toast.error((error as Error).message);
@@ -56,7 +76,7 @@ const Login: React.FC = () => {
         <span
           key={idx}
           className={clsx(
-            "pointer-events-none absolute left-1/2 top-1/2 h-0.5 w-0.5 rotate-[215deg] animate-meteor rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10]",
+            'pointer-events-none absolute left-1/2 top-1/2 h-0.5 w-0.5 rotate-[215deg] animate-meteor rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10]',
           )}
           style={style}
         >
@@ -67,7 +87,6 @@ const Login: React.FC = () => {
       <div id='topdiv' className="z-50 flex justify-center items-center h-screen p-14 absolute top-0 left-0 right-0 bottom-0">
         <ToastContainer />
         <div className={`flex justify-between bg-blue-600/10 filter backdrop-blur-sm rounded-md shadow-lg`}>
-
           <div>
             <img src={educationbg} alt="Education Illustration" className="w-96 h-96" />
           </div>

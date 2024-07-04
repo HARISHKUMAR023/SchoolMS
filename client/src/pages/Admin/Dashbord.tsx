@@ -6,6 +6,8 @@ import { FaUserGraduate, FaChalkboardTeacher, FaSchool } from 'react-icons/fa';
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../Store";
 import { addMonths, subMonths } from 'date-fns';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Store/index';
 interface CardData {
   icon: ReactElement;
   text: string;
@@ -21,7 +23,8 @@ const Dashbord = () => {
 //   const authState = useSelector((state: RootState) => state.auth);
 //  console.log(authState.user)
   const [currentMonth, setCurrentMonth] = useState(new Date());
-
+  const teacherId = useSelector((state: RootState) => state.auth.teacherId);
+  console.log(teacherId)
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };

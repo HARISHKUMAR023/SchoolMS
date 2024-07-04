@@ -54,6 +54,7 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
         { name: 'Overview', link: '#/classes/overview' },
         { name: 'Schedule', link: '#/classes/schedule' },
         { name: 'Resources', link: '#/classes/resources' },
+        { name: 'Mystudent', link: 'mysudent' },
       ],
       roles: ['admin', 'teacher', 'student'],
     },
@@ -76,6 +77,8 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
         { name: 'Resources', link: 'add-class' },
         { name: 'UserManagement', link: 'userTable' },
         { name: 'Adduser', link: 'Adduser' },
+        { name: 'SclassM', link: 'Student-class-section' },
+       
       ],
       roles: ['admin'],
     },

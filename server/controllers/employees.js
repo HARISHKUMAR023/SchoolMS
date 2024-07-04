@@ -7,6 +7,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 // Import other type-specific models
 
+
 exports.createEmployee = async (req, res) => {
   const {
     name,
@@ -20,6 +21,7 @@ exports.createEmployee = async (req, res) => {
   } = req.body;
 
   try {
+    // Create and save the Employee
     const employee = new Employee({
       name,
       dob,
@@ -34,26 +36,30 @@ exports.createEmployee = async (req, res) => {
     const savedEmployee = await employee.save();
 
     if (employeeType === "teacher") {
-      const teacher = new Teacher({
-        ...typeSpecificInfo,
-        employeeId: savedEmployee._id,
-      });
-      await teacher.save();
-
       const defaultPassword = "12345";
       // const salt = await bcrypt.genSalt(10);
       // const hashedPassword = await bcrypt.hash(defaultPassword, salt);
 
+      // Create and save the User
       const user = new User({
         name,
         email,
-        password: defaultPassword,
+        password: defaultPassword, // Replace with hashedPassword in production
         role: "teacher",
         active: true,
       });
 
-      await user.save();
+      const savedUser = await user.save();
       console.log("User created with default password");
+
+      // Create and save the Teacher
+      const teacher = new Teacher({
+        ...typeSpecificInfo,
+        employeeId: savedEmployee._id,
+        userId: savedUser._id, // Add the userId to the Teacher
+      });
+
+      await teacher.save();
     }
 
     res.status(201).json(savedEmployee);
@@ -62,6 +68,7 @@ exports.createEmployee = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 exports.getAllEmployees = async (req, res) => {
   try {
@@ -86,6 +93,23 @@ exports.getEmployeeById = async (req, res) => {
     res.json(employee);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+exports.getTeacherIdByUserId = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const teacher = await Teacher.findOne({ userId }); // Assuming your Teacher model has a field for userId
+
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
+
+    res.status(200).json({ teacherId: teacher._id });
+  } catch (error) {
+    console.error('Error fetching teacher ID:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

@@ -8,7 +8,8 @@ router.get('/:id', studentController.getStudentById);
 // router.post('/', validateStudent, studentController.createStudent);
 // router.put('/:id', validateStudent, studentController.updateStudent);
 router.post('/', upload.single('photo'), studentController.createStudent);
-
+router.put('/assign-class-section', studentController.assignClassSection);
+router.get('/teacher/:teacherId', studentController.getsudentByTeacherid);
 router.delete('/:id', studentController.deleteStudent);
 
 module.exports = router;
