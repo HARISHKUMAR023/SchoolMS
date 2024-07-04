@@ -92,7 +92,7 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
   return (
     <div
       className={`w-72 dark:bg-darkbg2 overflow-y-auto ${
-        isExpanded ? "h-screen" : "w-20" }`}  >
+        isExpanded ? "" : "w-20" }`}  >
       <div
           className="pl-10 mr-5 flex justify-center gap-4 items-center font-semibold text-lg text-center text-white mt-5
                       hover:text-red-500 cursor-pointer ease-in-out "
