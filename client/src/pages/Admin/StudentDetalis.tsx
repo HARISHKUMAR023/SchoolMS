@@ -1,10 +1,10 @@
-import  { useState } from 'react';
+// import  { useState } from 'react';
 import StudentList from '../../components/UI/Student/StudentList';
 const StudentDetalis = () => {
 
 
   return (
-    <div>
+    <div className=''>
       <StudentList  />
     </div>
 
