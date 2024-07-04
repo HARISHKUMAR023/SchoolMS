@@ -1,6 +1,10 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent,useEffect } from 'react';
 import axios from 'axios';
 
+interface ClassSection {
+  _id: string;
+  name: string;
+}
 interface AcademicInfo {
   admissionDate: string;
   aadhaarCardNumber: string;
@@ -55,9 +59,30 @@ const StudentForm: React.FC = () => {
       parentPhoneNumber: ''
     }
   });
+  const [classOptions, setClassOptions] = useState<ClassSection[]>([]);
+  const [sectionOptions, setSectionOptions] = useState<ClassSection[]>([]);
+  useEffect(() => {
+    fetchClassAndSectionOptions();
+  }, []);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files } = e.target;
+  const fetchClassAndSectionOptions = async () => {
+    try {
+      const classResponse = await axios.get<ClassSection[]>('http://localhost:5000/api/class-section/classes');
+      const sectionResponse = await axios.get<ClassSection[]>('http://localhost:5000/api/class-section/sections');
+      console.log(classResponse.data);
+      console.log(sectionResponse.data);
+      setClassOptions(classResponse.data);
+      setSectionOptions(sectionResponse.data);
+    } catch (error) {
+      console.error('Error fetching class and section options:', error);
+    }
+  };
+  const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    let files: FileList | null = null;
+if (e.target instanceof HTMLInputElement && e.target.type === 'file') {
+  files = e.target.files;
+}
     const keys = name.split('.') as (keyof FormData | keyof AcademicInfo | keyof ParentDetails)[];
 
     setFormData((prevData) => {
@@ -141,11 +166,21 @@ const StudentForm: React.FC = () => {
       </div>
       <div>
         <label>Class:</label>
-        <input type="text" name="class" value={formData.class} onChange={handleChange} required />
+        <select name="class" value={formData.class} onChange={handleChange} required>
+          <option value="">Select Class</option>
+          {classOptions.map((cls) => (
+            <option key={cls._id} value={cls._id}>{cls.name}</option>
+          ))}
+        </select>
       </div>
       <div>
         <label>Section:</label>
-        <input type="text" name="section" value={formData.section} onChange={handleChange} required />
+        <select name="section" value={formData.section} onChange={handleChange} required>
+          <option value="">Select Section</option>
+          {sectionOptions.map((sec) => (
+            <option key={sec._id} value={sec._id}>{sec.name}</option>
+          ))}
+        </select>
       </div>
       <div>
         <label>Blood Group:</label>

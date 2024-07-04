@@ -6,8 +6,16 @@ const studentSchema = new Schema({
   photo: { type: String, default: 'uploads/student/default-photo.jpg' } ,// Default photo
   name: { type: String, required: true },
   dob: { type: Date, required: true },
-  class: { type: String, required: true },
-  section:{type:String,required:true},
+  // class: { type: String, required: true },
+  // section:{type:String,required:true},
+  class: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SudentClass',
+  },
+  section: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Section',
+  },
   bloodGroup: { type: String, required: true },
   nationality: { type: String, required: true },
   registrationNumber: { type: String, required: true, unique: true },

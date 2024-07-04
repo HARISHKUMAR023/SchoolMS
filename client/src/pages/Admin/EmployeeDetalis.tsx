@@ -1,7 +1,9 @@
-
+import EmployeeList from "../../components/UI/Employee/EmployeeList"
 const EmployeeDetalis = () => {
   return (
-    <div>EmployeeDetalis</div>
+    <div>
+      <EmployeeList />
+    </div>
   )
 }
 

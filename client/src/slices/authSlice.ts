@@ -12,16 +12,19 @@ interface User {
   iat?: number;
   jti?: string;
   role: Role; // Use the Role type here
+  id: string; // Ensure user ID is included in the token payload
 }
 
 interface AuthState {
   token: string | null;
   user: User | null;
+  teacherId: string | null;
 }
 
 const initialState: AuthState = {
   token: null,
   user: null,
+  teacherId: null,
 };
 
 const authSlice = createSlice({
@@ -35,12 +38,16 @@ const authSlice = createSlice({
       // This example assumes `role` is always present in `decodedToken`.
       state.user = { ...decodedToken, role: decodedToken.role };
     },
+    setTeacherId(state, action: PayloadAction<string>) {
+      state.teacherId = action.payload;
+    },
     logout(state) {
       state.token = null;
       state.user = null;
+      state.teacherId = null;
     },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login,setTeacherId, logout } = authSlice.actions;
 export default authSlice.reducer;

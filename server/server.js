@@ -10,6 +10,7 @@ const DashboardRoutes = require('./routes/DashboardRoutes');
 const EmployeeRoutes = require('./routes/EmployeeRoutes');
 const AttendanceRoutes = require('./routes/attendanRoutes');
 const ClassRoutes = require('./routes/ClassRoutes');
+const ClassSection = require('./routes/ClassSection');
 const cors = require('cors');
 
 dotenv.config();
@@ -38,6 +39,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/dashboard', DashboardRoutes);
 app.use('/api/attendance', AttendanceRoutes);
 app.use('/api/classes', ClassRoutes);
+app.use('/api/class-section', ClassSection);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

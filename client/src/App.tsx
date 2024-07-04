@@ -9,12 +9,13 @@ import Register from './components/UI/Auth/Register';
 import Unauthorized from './pages/Unauthorized';
 import Attendance from './pages/Staff/Attendance';
 import AddClass from './pages/Setups/AddClass';
+import AssignClassSection from './pages/Setups/AssignClassSection';
 import UserTable from './pages/Setups/UserTable';
 import Layout from './components/layout/Layout';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import PublicRoute from './components/layout/PublicRoute';
-
+import Mystudent from './pages/Staff/Mystudent';
 
 const router = createBrowserRouter([
   {
@@ -98,6 +99,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['admin']}>
             <Register />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Student-class-section",
+        element: (
+          <ProtectedRoute allowedRoles={['admin', 'teacher']}>
+            <AssignClassSection/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "mysudent",
+        element: (
+          <ProtectedRoute allowedRoles={['admin', 'teacher']}>
+            <Mystudent/>
           </ProtectedRoute>
         ),
       },
