@@ -195,7 +195,7 @@ const EmployeeForm: React.FC = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.employeeType}
-                  className="dark:text-black cursor-pointer mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
+                  className="dark:text-white cursor-pointer mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
                 >
                   <option value="teacher" className="dark:bg-darkbg1 dark:text-white">Teacher</option>
                   <option value="driver" className="dark:bg-darkbg1 dark:text-white">Driver</option>
