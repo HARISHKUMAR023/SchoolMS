@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Store/index';
+import 'react-toastify/dist/ReactToastify.css';
+
 interface Student {
   _id: string;
   name: string;
-  class: string;
-  section: string;
+  class: {
+    _id: string;
+    name: string;
+    teacherInCharge: string;
+  };
+  section: {
+    _id: string;
+    name: string;
+  };
   rollNumber: number;
 }
 
@@ -18,20 +29,20 @@ const Attendance: React.FC = () => {
   const [attendance, setAttendance] = useState<AttendanceStatus>({});
   const [date, setDate] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const teacherId = useSelector((state: RootState) => state.auth.teacherId);
 
   useEffect(() => {
-    // Automatically set today's date
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0]; // Format the date as YYYY-MM-DD
     setDate(formattedDate);
 
-    axios.get('http://localhost:5000/api/students')
+    axios.get(`http://localhost:5000/api/students/teacher/${teacherId}`)
       .then(response => {
         setStudents(response.data);
         console.log(response.data);
       })
       .catch(error => console.log(error));
-  }, []);
+  }, [teacherId]);
 
   const markAttendance = () => {
     setLoading(true);
@@ -64,7 +75,6 @@ const Attendance: React.FC = () => {
         }
       });
   };
-  
 
   const handleAttendanceChange = (studentId: string, status: string) => {
     setAttendance({
@@ -83,7 +93,7 @@ const Attendance: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-        <ToastContainer />
+      <ToastContainer />
       <h2 className="text-2xl font-bold mb-4">Attendance</h2>
       <div className="mb-4 flex space-x-2">
         <span className="border rounded p-2 bg-gray-100">{date}</span>
@@ -102,10 +112,10 @@ const Attendance: React.FC = () => {
       </div>
       <ul className="">
         {students.map(student => (
-          <li key={student._id} className="flex items-center  border p-4 rounded">
-            <div>
+          <li key={student._id} className="flex items-center border p-4 rounded">
+            <div className="flex-1">
               <p>{student.name}</p>
-              <p>{student.class} - {student.section}</p>
+              <p>{student.class.name} - {student.section.name}</p>
             </div>
             <div className="flex space-x-2">
               <button 

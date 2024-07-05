@@ -11,7 +11,9 @@ const EmployeeRoutes = require('./routes/EmployeeRoutes');
 const AttendanceRoutes = require('./routes/attendanRoutes');
 const ClassRoutes = require('./routes/ClassRoutes');
 const ClassSection = require('./routes/ClassSection');
+const HomeworkRoutes = require('./routes/Homework');
 const cors = require('cors');
+// const Homework = require('./models/Homework');
 
 dotenv.config();
 connectDB();
@@ -40,6 +42,7 @@ app.use('/api/dashboard', DashboardRoutes);
 app.use('/api/attendance', AttendanceRoutes);
 app.use('/api/classes', ClassRoutes);
 app.use('/api/class-section', ClassSection);
+app.use('/api/homework', HomeworkRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
