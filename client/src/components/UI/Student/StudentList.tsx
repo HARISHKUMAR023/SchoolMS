@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-
+import { FaEye } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 interface Student {
   _id: string;
   photo: string;
@@ -27,7 +29,8 @@ const StudentList: React.FC = () => {
   const [filterClass, setFilterClass] = useState('');
   const [filterBloodGroup, setFilterBloodGroup] = useState('');
   const printRef = useRef<HTMLDivElement | null>(null);
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -62,6 +65,29 @@ const StudentList: React.FC = () => {
 
   const handleFilterBloodGroup = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterBloodGroup(e.target.value);
+  };
+
+  const handleDeleteClick = (student: Student) => {
+    setStudentToDelete(student);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (studentToDelete) {
+      try {
+        await axios.delete(`http://localhost:5000/api/students/${studentToDelete._id}`); // Replace with your API endpoint
+        setStudents(students.filter(student => student._id !== studentToDelete._id));
+        setIsDeleteModalOpen(false);
+        setStudentToDelete(null);
+      } catch (error) {
+        console.error('Error deleting student:', error);
+      }
+    }
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setStudentToDelete(null);
   };
 
   // Pagination logic
@@ -209,12 +235,24 @@ const StudentList: React.FC = () => {
                 <td className="py-3 px-6 text-left">{student.dob}</td>
                 <td className="py-3 px-6 text-left">{student.class}</td>
                 <td className="py-3 px-6 text-left">{student.bloodGroup}</td>
-                <td className="py-3 px-6 text-left">
+                <td className="py-1 px-6 text-left">
                   <button 
                     onClick={() => handleViewMore(student)} 
-                    className="text-blue-500 dark:text-blue-400 hover:text-blue-700 focus:outline-none"
+                    className="bg-blue-500 px-2 py-1 rounded text-white dark:text-blue-400 hover:text-blue-700 focus:outline-none"
                   >
-                    View More
+                    <FaEye />
+                  </button>
+                  <button 
+                    onClick={() => handleViewMore(student)} 
+                    className="bg-yellow-500 px-2 py-1 rounded text-white dark:text-yellow-400 hover:text-yellow-700 focus:outline-none mx-1"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteClick(student)}
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
+                  >
+                    <MdDelete />
                   </button>
                 </td>
               </tr>
@@ -276,6 +314,32 @@ const StudentList: React.FC = () => {
                 className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
               >
                 Print
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+      
+{isDeleteModalOpen && studentToDelete && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white rounded-lg shadow-lg p-6 relative w-full max-w-md dark:bg-darkbg2 dark:text-white">
+            <h3 className="text-xl font-bold mb-4 text-center">Confirm Delete</h3>
+            <p className="text-center mb-4">Are you sure you want to delete {studentToDelete.name}?</p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-700"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={cancelDelete}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+              >
+                Cancel
               </button>
             </div>
           </div>
