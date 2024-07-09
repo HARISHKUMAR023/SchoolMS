@@ -7,9 +7,9 @@ const Breadcrumb: React.FC = () => {
 
   return (
     <nav className="breadcrumb">
-      <ul className="flex space-x-2">
+      <ul className="flex space-x-2 ml-2">
         <li>
-          <Link to="/" className="text-blue-600 hover:underline">Home</Link>
+          <Link to="/" className="dark:text-white hover:underline">Home</Link>
         </li>
         {pathnames.map((value, index) => {
           const to = `/${pathnames.slice(0, index + 1).join('/')}`;
@@ -19,9 +19,9 @@ const Breadcrumb: React.FC = () => {
             <li key={to} className="flex items-center">
               <span className="mx-2">/</span>
               {isLast ? (
-                <span className="text-gray-500">{value.replace(/-/g, ' ')}</span>
+                <span className="dark:text-white text-lg font-bold">{value.replace(/-/g, ' ')}</span>
               ) : (
-                <Link to={to} className="text-blue-600 hover:underline">{value.replace(/-/g, ' ')}</Link>
+                <Link to={to} className="dark:text-white hover:underline">{value.replace(/-/g, ' ')}</Link>
               )}
             </li>
           );
