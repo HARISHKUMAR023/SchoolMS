@@ -1,28 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import proimg from '../../../assets/avatar.jpg';
 import { IoMdNotifications } from "react-icons/io";
 import ThemeToggle from '../../comman/Buttons/ThemeToggle';
+import Breadcrumb from './Breadcrumb'
 
 const Navbar: React.FC = () => {
   const [showFloatDiv, setShowFloatDiv] = useState(false);
-  const [pageName, setPageName] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    const pathToName: { [key: string]: string } = {
-      '/dashboard/Dashboard': 'Dashboard',
-      '/dashboard/add-student': 'Add Student',
-      '/dashboard/add-employee': 'Add Employee',
-      '/dashboard/student-details': 'Student Details',
-      '/dashboard/employee-details': 'Employee Details',
-      // Add more paths and names as needed
-    };
-
-    const currentPageName = pathToName[location.pathname] || 'Page';
-    setPageName(currentPageName);
-  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -34,9 +19,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className='flex justify-end p-2 bg-white/90 dark:bg-darkbg2/10 backdrop:blur-md border-b dark:border-gray-300 border-darkbg2'>
+    <div className='flex justify-between items-center p-2 bg-white/90 dark:bg-darkbg2/10 backdrop:blur-md border-b dark:border-gray-300 border-darkbg2'>
+      <div className='flex items-center'>
+        <Breadcrumb />
+      </div>
       <div className='mr-3 flex flex-row gap-x-3 items-center'>
-        <p id="pagename">{pageName}</p>
         <ThemeToggle />
         <IoMdNotifications className='size-6 hover:shadow' />
         <h2 className=''>Harish</h2>
