@@ -178,13 +178,16 @@ const StudentForm: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div id='photo'>
             <label className="block text-sm font-medium dark:text-white text-gray-700 mb-1">Photo</label>
-            <input type="file" name="photo" onChange={handleFileChange} />
-          </div>
-               {imagePreviewUrl && (
+            {imagePreviewUrl && (
         <div>
-          <img src={imagePreviewUrl} alt="Preview" style={{ width: '100px', height: '100px' }} />
+          <img src={imagePreviewUrl} 
+               alt="Preview" 
+               className='mb-2 mt-2 size-28'/>
           </div>
          )}
+            <input type="file" name="photo" onChange={handleFileChange} />
+          </div>
+               
           <div id="full" className="flex w-full gap-x-8 mt-4">
             <div id="left" className="w-full space-y-4">
              <div>
@@ -436,10 +439,10 @@ const StudentForm: React.FC = () => {
                   className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
                 />
               </div>
-              <button 
+              <div className='flex'><button 
                 type="submit"
-                className="mt-4 p-2 bg-red-500 hover:bg-red-600 text-white rounded-md"
-                >Submit</button>    
+                className="mt-4 p-2 bg-red-500 hover:bg-red-600 text-white rounded-md ml-auto"
+                >Submit</button>    </div>
             </div>
           </div>
           
