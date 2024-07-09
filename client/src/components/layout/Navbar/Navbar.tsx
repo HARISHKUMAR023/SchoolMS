@@ -19,7 +19,8 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className='flex justify-between items-center p-2 bg-white/90 dark:bg-darkbg2/10 backdrop:blur-md border-b dark:border-gray-300 border-darkbg2'>
+    <div className='flex justify-between items-center p-2 bg-white/90 dark:bg-darkbg2/10 backdrop:blur-md border-b dark:border-gray-300
+                    shadow-md shadow-black border-darkbg2'>
       <div className='flex items-center'>
         <Breadcrumb />
       </div>

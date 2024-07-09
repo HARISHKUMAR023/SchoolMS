@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import '../Student/StudentForm.css'
+
 const initialValues = {
   name: '',
   dob: '',

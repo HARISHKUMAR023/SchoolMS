@@ -1,6 +1,9 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import './StudentForm.css'
+
+
 interface ClassSection {
   _id: string;
   name: string;
@@ -185,7 +188,7 @@ const StudentForm: React.FC = () => {
                className='mb-2 mt-2 size-28'/>
           </div>
          )}
-            <input type="file" name="photo" onChange={handleFileChange} />
+            <input type="file" name="photo" onChange={handleFileChange} className='bg-transparent' />
           </div>
                
           <div id="full" className="flex w-full gap-x-8 mt-4">
