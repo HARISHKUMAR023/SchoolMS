@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { FaEye } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 interface Employee {
   _id: string;
@@ -24,6 +27,8 @@ const EmployeeList: React.FC = () => {
   const [filterEmployeeType, setFilterEmployeeType] = useState('');
   const [filterExperience, setFilterExperience] = useState('');
   const printRef = useRef<HTMLDivElement | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [employeeToDelete, setEmployeeToDelete] = useState<Employee | null>(null);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -59,6 +64,29 @@ const EmployeeList: React.FC = () => {
 
   const handleFilterExperience = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterExperience(e.target.value);
+  };
+
+  const handleDeleteClick = (employee: Employee) => {
+    setEmployeeToDelete(employee);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (employeeToDelete) {
+      try {
+        await axios.delete(`http://localhost:5000/api/employees/${employeeToDelete._id}`); // Replace with your API endpoint
+        setEmployees(employees.filter(employee => employee._id !== employeeToDelete._id));
+        setIsDeleteModalOpen(false);
+        setEmployeeToDelete(null);
+      } catch (error) {
+        console.error('Error deleting employee:', error);
+      }
+    }
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setEmployeeToDelete(null);
   };
 
   // Pagination logic
@@ -119,14 +147,14 @@ const EmployeeList: React.FC = () => {
 
   const printContent = () => {
     if (!printRef.current) return;
-  
+
     const iframe = document.createElement('iframe');
     iframe.style.position = 'absolute';
     iframe.style.width = '0';
     iframe.style.height = '0';
     iframe.style.border = '0';
     document.body.appendChild(iframe);
-  
+
     const contentWindow = iframe.contentWindow;
     if (contentWindow) {
       contentWindow.document.open();
@@ -134,7 +162,7 @@ const EmployeeList: React.FC = () => {
       contentWindow.document.write(printRef.current.innerHTML);
       contentWindow.document.write('</body></html>');
       contentWindow.document.close();
-  
+
       const images = contentWindow.document.images;
       const imagesLoadedPromise: Promise<void>[] = Array.from(images).map(img => new Promise<void>((resolve) => {
         if (img.complete) {
@@ -144,7 +172,7 @@ const EmployeeList: React.FC = () => {
           img.onerror = () => resolve();
         }
       }));
-  
+
       Promise.all(imagesLoadedPromise).then(() => {
         contentWindow.print();
         contentWindow.onafterprint = () => document.body.removeChild(iframe);
@@ -196,12 +224,24 @@ const EmployeeList: React.FC = () => {
                 <td className="py-3 px-6 text-left">{employee.name}</td>
                 <td className="py-3 px-6 text-left">{employee.dob}</td>
                 <td className="py-3 px-6 text-left">{employee.employeeType}</td>
-                <td className="py-3 px-6 text-left">
+                <td className="py-1 px-6 text-left">
                   <button 
                     onClick={() => handleViewMore(employee)} 
-                    className="text-blue-500 hover:text-blue-700 focus:outline-none"
+                    className="text-blue-500 dark:text-blue-400 hover:text-blue-700 focus:outline-none"
                   >
-                    View More
+                    <FaEye />
+                  </button>
+                  <button 
+                    onClick={() => handleViewMore(employee)} 
+                    className="text-yellow-500 dark:text-yellow-400 hover:text-yellow-700 focus:outline-none mx-1"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button 
+                    onClick={() => handleDeleteClick(employee)} 
+                    className="text-red-500 dark:text-red-400 hover:text-red-700 focus:outline-none mx-1"
+                  >
+                    <MdDelete />
                   </button>
                 </td>
               </tr>
@@ -241,7 +281,7 @@ const EmployeeList: React.FC = () => {
               </button>
             </div>
             <div ref={printRef} className="pdf-content">
-              <img src={`http://localhost:5000/${selectedEmployee.photo}`} alt={selectedEmployee.name} className="employee-photo w-32 h-32 border border-gray-500" />
+              {/* <img src={`http://localhost:5000/${selectedEmployee.photo}`} alt={selectedEmployee.name} className="employee-photo w-32 h-32 border border-gray-500" /> */}
               <p><strong>Name:</strong> {selectedEmployee.name}</p>
               <p><strong>DOB:</strong> {selectedEmployee.dob}</p>
               <p><strong>Employee Type:</strong> {selectedEmployee.employeeType}</p>
@@ -258,6 +298,30 @@ const EmployeeList: React.FC = () => {
                 className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
               >
                 Print
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && employeeToDelete && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white rounded-lg shadow-lg p-6 relative w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4 text-center">Confirm Delete</h3>
+            <p className="text-center mb-4">Are you sure you want to delete {employeeToDelete.name}?</p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-700"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={cancelDelete}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+              >
+                Cancel
               </button>
             </div>
           </div>

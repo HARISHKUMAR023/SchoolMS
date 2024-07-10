@@ -8,6 +8,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import clsx from 'clsx';
 import { jwtDecode } from "jwt-decode";
+import LoadingModal from '../../comman/Looding/LoadingModal';
+
+
 interface LoginResponse {
   token: string;
 }
@@ -23,6 +26,7 @@ const fetchTeacherId = async (userId: string) => {
 };
 
 const Login: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>([]);
@@ -43,12 +47,15 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+     // Simulate a minimum 5-second delay
+     const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
     try {
       const { data } = await axios.post<LoginResponse>('http://localhost:5000/api/auth/login', { email, password });
       const { token } = data;
       dispatch(login({ token }));
       localStorage.setItem('token', data.token);
-
+      await delay(5000);
       const decodedToken = jwtDecode<{ role: string, id: string }>(token); // Adjust based on your token structure
       if (decodedToken.role === 'teacher') {
         const teacherId = await fetchTeacherId(decodedToken.id);
@@ -67,6 +74,8 @@ const Login: React.FC = () => {
         toast.error((error as Error).message);
       }
       console.error(error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -118,6 +127,7 @@ const Login: React.FC = () => {
             </div>
           </form>
         </div>
+        <LoadingModal show={loading} /> 
       </div>
     </>
   );

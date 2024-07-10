@@ -113,6 +113,9 @@ exports.getTeacherIdByUserId = async (req, res) => {
   }
 };
 
+
+
+
 // // Create a new employee
 // router.post('/', async (req, res) => {
 //   const { name, dob, address, phoneNumber, email, joiningDate, employeeType, typeSpecificInfo } = req.body;

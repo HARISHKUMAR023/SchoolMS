@@ -22,6 +22,8 @@ exports.getsudentByTeacherid = async (req, res)=>{
   }
 }
 
+
+
 // Get all students
 exports.getAllStudents = async (req, res) => {
   try {

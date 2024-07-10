@@ -2,8 +2,6 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import './StudentForm.css'
-
-
 interface ClassSection {
   _id: string;
   name: string;
@@ -181,6 +179,7 @@ const StudentForm: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div id='photo'>
             <label className="block text-sm font-medium dark:text-white text-gray-700 mb-1">Photo</label>
+
             {imagePreviewUrl && (
         <div>
           <img src={imagePreviewUrl} 
@@ -442,10 +441,12 @@ const StudentForm: React.FC = () => {
                   className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
                 />
               </div>
+
               <div className='flex'><button 
                 type="submit"
                 className="mt-4 p-2 bg-red-500 hover:bg-red-600 text-white rounded-md ml-auto"
                 >Submit</button>    </div>
+
             </div>
           </div>
           

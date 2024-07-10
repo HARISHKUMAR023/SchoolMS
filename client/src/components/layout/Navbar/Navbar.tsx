@@ -4,13 +4,16 @@ import proimg from '../../../assets/avatar.jpg';
 import { IoMdNotifications } from "react-icons/io";
 import ThemeToggle from '../../comman/Buttons/ThemeToggle';
 import Breadcrumb from './Breadcrumb'
-
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../slices/authSlice';
 const Navbar: React.FC = () => {
+     const dispatch = useDispatch();
   const [showFloatDiv, setShowFloatDiv] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    dispatch(logout());
     navigate('/login');
   };
 

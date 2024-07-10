@@ -16,7 +16,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import PublicRoute from './components/layout/PublicRoute';
 import Mystudent from './pages/Staff/Mystudent';
-
+import SubmitHomework from './pages/Service/SubmitHomework';
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
       {
         path: "StudentAttendance",
         element: (
-          <ProtectedRoute allowedRoles={['admin']}>
+          <ProtectedRoute allowedRoles={['admin', 'teacher']}>
             <Attendance />
           </ProtectedRoute>
         ),
@@ -115,6 +115,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['admin', 'teacher']}>
             <Mystudent/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "submit-homework",
+        element: (
+          <ProtectedRoute allowedRoles={['admin', 'teacher']}>
+            <SubmitHomework/>
           </ProtectedRoute>
         ),
       },
