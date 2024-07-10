@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import proimg from '../../../assets/avatar.jpg';
 import { IoMdNotifications } from "react-icons/io";
-import { useNavigate } from 'react-router-dom';
 import ThemeToggle from '../../comman/Buttons/ThemeToggle';
+import Breadcrumb from './Breadcrumb'
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../slices/authSlice';
-const Navbar = () => {
-  const dispatch = useDispatch();
+const Navbar: React.FC = () => {
+     const dispatch = useDispatch();
   const [showFloatDiv, setShowFloatDiv] = useState(false);
   const navigate = useNavigate();
 
@@ -21,9 +22,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className='flex justify-end p-2 bg-white/90 dark:bg-darkbg2/10 backdrop:blur-md border-b border-gray-300'>
+    <div className='flex justify-between items-center p-2 bg-white/90 dark:bg-darkbg2/10 backdrop:blur-md border-b dark:border-gray-300
+                    shadow-md shadow-black border-darkbg2'>
+      <div className='flex items-center'>
+        <Breadcrumb />
+      </div>
       <div className='mr-3 flex flex-row gap-x-3 items-center'>
-        
         <ThemeToggle />
         <IoMdNotifications className='size-6 hover:shadow' />
         <h2 className=''>Harish</h2>
@@ -34,9 +38,8 @@ const Navbar = () => {
           onClick={toggleFloatDiv}
         />
         {showFloatDiv && (
-          <div id='floatdiv' className=' absolute size-16 mt-28 ml-[125px]'>
-            {/* Content of floatdiv */}
-            <button onClick={handleLogout} className="bg-white py-2 px-3 rounded-md shadow-md shadow-yellow-600 text-black font-medium">
+          <div id='floatdiv' className='absolute size-16 mt-28 ml-[125px]'>
+            <button onClick={handleLogout} className="bg-white py-2 px-3 rounded-md shadow-md shadow-yellow-600 text-black font-medium dark:bg-darkbg1 dark:text-white">
               Logout
             </button>
           </div>

@@ -14,7 +14,7 @@ const Layout = () => {
       <div className="flex flex-col w-full dark:bg-[#1e1e1e] dark:text-white">
         <Navbar />
 
-        <div className=" overflow-y-auto bg-[#E5EAEF] dark:bg-[#333333] p-3 pb-6 max-h-[90%]">
+        <div className=" overflow-y-auto bg-[#E5EAEF] dark:bg-[#333333] p-3 pb-6 min-h-[90%] max-h-[90%]">
 
           <Outlet />
         </div>
