@@ -22,7 +22,12 @@ const UserTable: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<User[]>('http://localhost:5000/api/auth/allusers');
+      const token = localStorage.getItem('token');
+      const response = await axios.get<User[]>('http://localhost:5000/api/auth/allusers', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users:', error);
