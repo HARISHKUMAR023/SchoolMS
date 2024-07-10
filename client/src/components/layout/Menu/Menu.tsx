@@ -114,6 +114,16 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
       ],
       roles: ['admin'],
     },
+    {
+      title: 'Monitering',
+      icone: <IoIosPeople className='w-5 h-5' />,
+      subMenuItems: [
+        { name: 'Overview', link: 'log' }
+      
+       
+      ],
+      roles: ['admin'],
+    },
   ];
 
   return (

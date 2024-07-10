@@ -17,6 +17,7 @@ import ProtectedRoute from './components/layout/ProtectedRoute';
 import PublicRoute from './components/layout/PublicRoute';
 import Mystudent from './pages/Staff/Mystudent';
 import SubmitHomework from './pages/Service/SubmitHomework';
+import Logmanagement from './pages/Logmanagement/Logmanagement';
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -123,6 +124,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['admin', 'teacher']}>
             <SubmitHomework/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "log",
+        element: (
+          <ProtectedRoute allowedRoles={['admin', 'teacher']}>
+            <Logmanagement/>
           </ProtectedRoute>
         ),
       },
