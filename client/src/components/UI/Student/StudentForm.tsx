@@ -169,6 +169,8 @@ const StudentForm: React.FC = () => {
       setImagePreviewUrl('');
     } catch (error) {
       console.error(error);
+      toast.warning('Error adding student');
+
     }
   };
 

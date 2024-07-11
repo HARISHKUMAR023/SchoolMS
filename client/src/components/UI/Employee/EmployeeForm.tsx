@@ -89,7 +89,7 @@ const EmployeeForm: React.FC = () => {
         // resetForm();
       } catch (error) {
         console.error('There was an error submitting the form!', error);
-        toast.error('There was an error submitting the form!');
+        toast.warning('Error adding Employee');
       }
     },
   });
