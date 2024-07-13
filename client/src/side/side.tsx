@@ -55,7 +55,7 @@ const Side = () => {
   const menuItems = [
     {
       title: 'Home',
-      icon: <AiFillHome className={`w-5 h-5 ${activeSection === 'home' ? 'text-blue-500' : 'text-gray-600 text-lg'}`} />,
+      icon: <AiFillHome className={`w-5 h-5 ${activeSection === 'home' ? 'text-blue-500 dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
         { name: '• Dashboard', link: '/dashboard' },
         { name: '• Add Student', link: 'add-student' },
@@ -66,7 +66,7 @@ const Side = () => {
     },
     {
       title: 'Students',
-      icon: <PiStudentFill className={`w-5 h-5 ${activeSection === 'students' ? 'text-blue-500' : 'text-gray-600 text-lg'}`} />,
+      icon: <PiStudentFill className={`w-5 h-5 ${activeSection === 'students' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
         { name: '• Attendance', link: 'student-attendance' },
         { name: '• Message', link: 'submit-homework' }
@@ -75,7 +75,7 @@ const Side = () => {
     },
     {
       title: 'Teachers',
-      icon: <FaChalkboardTeacher className={`w-5 h-5 ${activeSection === 'teachers' ? 'text-blue-500' : 'text-gray-600 text-lg'}`} />,
+      icon: <FaChalkboardTeacher className={`w-5 h-5 ${activeSection === 'teachers' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
         { name: '• Overview', link: 'teacher-overview' }
       ],
@@ -83,7 +83,7 @@ const Side = () => {
     },
     {
       title: 'Services',
-      icon: <MdOutlineMiscellaneousServices className={`w-5 h-5 ${activeSection === 'services' ? 'text-blue-500' : 'text-gray-600 text-lg'}`} />,
+      icon: <MdOutlineMiscellaneousServices className={`w-5 h-5 ${activeSection === 'services' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70' }`} />,
       subMenuItems: [
         { name: '• Message', link: 'submit-homework' }
       ],
@@ -91,7 +91,7 @@ const Side = () => {
     },
     {
       title: 'Classes',
-      icon: <SiGoogleclassroom className={`w-5 h-5 ${activeSection === 'classes' ? 'text-blue-500' : 'text-gray-600 text-lg'}`} />,
+      icon: <SiGoogleclassroom className={`w-5 h-5 ${activeSection === 'classes' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
         { name: 'My Students', link: 'my-students' }
       ],
@@ -99,7 +99,7 @@ const Side = () => {
     },
     {
       title: 'Reports',
-      icon: <BiSolidReport className={`w-5 h-5 ${activeSection === 'reports' ? 'text-blue-500' : 'text-gray-600 text-lg'}`} />,
+      icon: <BiSolidReport className={`w-5 h-5 ${activeSection === 'reports' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
         { name: '• Overview', link: '/add-user' }
       ],
@@ -107,7 +107,7 @@ const Side = () => {
     },
     {
       title: 'Settings',
-      icon: <AiFillSetting className={`w-5 h-5 ${activeSection === 'settings' ? 'text-blue-500' : 'text-gray-600 text-lg'}`} />,
+      icon: <AiFillSetting className={`w-5 h-5 ${activeSection === 'settings' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
         { name: '• Overview', link: 'user-overview' },
         { name: '• Schedule', link: 'user-schedule' },
@@ -121,13 +121,13 @@ const Side = () => {
   ];
 
   return (
-    <div className="overflow-y-auto overflow-x-hidden h-full ">
+    <div className="overflow-y-auto overflow-x-hidden h-full rounded-md bg-primary/70 dark:bg-darkbg1 ">
       <div className={`h-full ${isExpanded ? 'w-64' : 'w-28'} rounded-md transition-all duration-300`}>
-        <div className="h-full bg-white rounded-md">
-          <div id='top' className='flex items-center pt-2'>
+        <div className="h-full  rounded-md">
+          <div id='top' className='flex items-center pt-2 backdrop-blur sticky top-0'>
             <div className={`w-full flex items-center justify-center`}>
-              <TbHexagonLetterSFilled className='size-8 text-blue-500' />
-              <p className={`ml-3 text-2xl font-bold text-blue-500 ${isExpanded ? null : 'hidden'}`}>School Sync</p>
+              <TbHexagonLetterSFilled className='size-8 text-blue-500 dark:text-white' />
+              <p className={`ml-3 text-2xl font-bold text-blue-500 dark:text-white ${isExpanded ? null : 'hidden'}`}>School Sync</p>
             </div>
             <div className='-mr-[11px] ml-auto'>
               <Hamburger
@@ -141,7 +141,7 @@ const Side = () => {
             {menuItems.map((item, index) => (
               <div
                 key={index}
-                className={`p-2  ${activeSection === item.title.toLowerCase() ? 'active-section ripple bg-blue-100/70 ' : ''} rounded-md ${rippleActive ? 'ripple-active' : ''}`}>
+                className={`p-2  ${activeSection === item.title.toLowerCase() ? 'active-section ripple bg-white/70 dark:bg-darkbg2/80' : ''} rounded-md ${rippleActive ? 'ripple-active' : ''}`}>
 
                 <div
                   id={item.title.toLowerCase()}
@@ -149,7 +149,7 @@ const Side = () => {
                   onClick={() => toggleSection(item.title.toLowerCase())}>
                   {item.icon}
                   <p
-                    className={` ${isExpanded ? 'ml-2 text-lg font-semibold' : 'mt-2 text-lg font-semibold'} ${activeSection === item.title.toLowerCase() ? 'text-blue-500' : 'text-gray-600 text-lg'}`}>{item.title}</p>
+                    className={` ${isExpanded ? 'ml-2 text-lg font-semibold' : 'mt-2 text-lg font-semibold'} ${activeSection === item.title.toLowerCase() ? 'text-blue-500 dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`}>{item.title}</p>
                 </div>
 
                 <div id={`slide-down-${item.title.toLowerCase()}`} className={`overflow-hidden transition-all duration-300 ${activeSection === item.title.toLowerCase() ? 'max-h-42' : 'max-h-0'}`}>
@@ -159,7 +159,7 @@ const Side = () => {
                       <Link
                         key={subIndex}
                         to={subItem.link}
-                        className={`${isExpanded ? 'ml-2' : 'hidden text-lg'} block font-semibold  ${activeSubSection === subItem.name.toLowerCase() ? 'text-blue-500' : 'text-gray-600 '}`}
+                        className={`${isExpanded ? 'ml-2' : 'hidden text-lg'} block font-semibold  ${activeSubSection === subItem.name.toLowerCase() ? 'text-blue-500 dark:text-white' : 'text-gray-600 dark:text-white/40'}`}
                         onClick={() => toggleSubSection(subItem.name.toLowerCase())}>
                         {subItem.name} 
                       </Link>

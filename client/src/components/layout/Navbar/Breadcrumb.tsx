@@ -7,7 +7,7 @@ const Breadcrumb: React.FC = () => {
 
   return (
     <nav className="breadcrumb">
-      <ul className="flex space-x-2 ml-2">
+      <ul className="flex space-x-2 ml-2 dark:text-white">
         <li>
           <Link to="/" className="dark:text-white hover:underline">Home</Link>
         </li>
