@@ -121,8 +121,8 @@ const Side = () => {
   ];
 
   return (
-    <div className="overflow-y-auto overflow-x-hidden h-full rounded-md bg-primary/70 dark:bg-darkbg1 ">
-      <div className={`h-full ${isExpanded ? 'w-64' : 'w-28'} rounded-md transition-all duration-300`}>
+    <div className="overflow-y-auto overflow-x-hidden h-full rounded-md bg-primary/70 dark:bg-darkbg1">
+      <div className={`h-auto ${isExpanded ? 'w-64' : 'w-28'} rounded-md transition-all duration-300`}>
         <div className="h-full  rounded-md">
           <div id='top' className='flex items-center pt-2 backdrop-blur sticky top-0'>
             <div className={`w-full flex items-center justify-center`}>
@@ -137,11 +137,11 @@ const Side = () => {
             </div>
           </div>
 
-          <div id='content' className='flex flex-col justify-center p-2 '>
+          <div id='content' className='flex flex-col justify-center p-2 mt-4 '>
             {menuItems.map((item, index) => (
               <div
                 key={index}
-                className={`p-2  ${activeSection === item.title.toLowerCase() ? 'active-section ripple bg-white/70 dark:bg-darkbg2/80' : ''} rounded-md ${rippleActive ? 'ripple-active' : ''}`}>
+                className={`p-2  ${activeSection === item.title.toLowerCase() ? 'active-section ripple bg-white/70 dark:bg-white/10' : ''} rounded-md ${rippleActive ? 'ripple-active' : ''}`}>
 
                 <div
                   id={item.title.toLowerCase()}
@@ -159,7 +159,7 @@ const Side = () => {
                       <Link
                         key={subIndex}
                         to={subItem.link}
-                        className={`${isExpanded ? 'ml-2' : 'hidden text-lg'} block font-semibold  ${activeSubSection === subItem.name.toLowerCase() ? 'text-blue-500 dark:text-white' : 'text-gray-600 dark:text-white/40'}`}
+                        className={`${isExpanded ? 'ml-2' : 'hidden text-lg'} block font-semibold  ${activeSubSection === subItem.name.toLowerCase() ? 'text-blue-500 dark:text-white' : 'text-gray-600 dark:text-white/60'}`}
                         onClick={() => toggleSubSection(subItem.name.toLowerCase())}>
                         {subItem.name} 
                       </Link>
