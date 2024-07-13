@@ -6,3 +6,49 @@ p{
     -ms-user-select: none; /* Internet Explorer/Edge */
     
 }
+
+.transition-all {
+    transition: all 0.3s ease;
+  }
+  
+
+/* Ripple effect */
+/* 
+.ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple:after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+  }
+  
+  .ripple-active:after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  
+  
+  /* .active-section,
+  .active-subsection {
+    background-color: #e0f2fe; 
+    transition: background-color 0.3s, color 0.3s;
+  }*
+  
+  .active-section .icon,
+  .active-subsection .icon {
+    color: #3b82f6; 
+  }
+   */
