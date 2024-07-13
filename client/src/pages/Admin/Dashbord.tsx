@@ -46,7 +46,7 @@ const Dashbord = () => {
         </div>
      
       <div className="basis-5/12 ml-2">
-        <div className="grid grid-cols-2 bg-blue-500/10 px-2 dark:bg-darkbg2
+        <div className="grid grid-cols-2 bg-blue-500/20 px-2 dark:bg-darkbg2
                         cursor-pointer mx-2 py-2 rounded-lg dark:text-black">
           {cardData.map((data, index) => (
             <SubCard key={index} icon={data.icon} text={data.text} count={data.count}/>
