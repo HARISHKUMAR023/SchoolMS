@@ -8,6 +8,8 @@ import { MdOutlineMiscellaneousServices } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 import { BiSolidReport } from "react-icons/bi";
 import { TbHexagonLetterSFilled } from "react-icons/tb";
+import { RiCodeBoxFill } from "react-icons/ri";
+import { BsFillInfoCircleFill } from "react-icons/bs";
 import './side.css';
 
 const Side = () => {
@@ -15,10 +17,6 @@ const Side = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [activeSubSection, setActiveSubSection] = useState<string | null>(null);
   const [rippleActive, setRippleActive] = useState(false);
-  // New states for individual section toggles
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isTeachersOpen, setIsTeachersOpen] = useState(false);
-  // Add more as needed for other sections
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -30,12 +28,6 @@ const Side = () => {
     } else {
       setActiveSection(sectionId);
       setActiveSubSection(null); // Reset the sub-section when changing the main section
-      // Toggle individual section states
-      if (sectionId === 'settings') {
-        setIsSettingsOpen(!isSettingsOpen);
-      } else if (sectionId === 'teachers') {
-        setIsTeachersOpen(!isTeachersOpen);
-      }
     }
     setIsExpanded(true);
     setRippleActive(true);
@@ -93,7 +85,7 @@ const Side = () => {
       title: 'Classes',
       icon: <SiGoogleclassroom className={`w-5 h-5 ${activeSection === 'classes' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
-        { name: 'My Students', link: 'my-students' }
+        { name: '• My Students', link: 'my-students' }
       ],
       roles: ['• admin', 'teacher', 'student'],
     },
@@ -120,54 +112,198 @@ const Side = () => {
     },
   ];
 
+  const developerSettings = [
+    {
+    title: 'Developer Settings',
+    icon: <RiCodeBoxFill className={`w-5 h-5 ${activeSection === 'developer settings' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
+    subMenuItems: [
+      { name: '• Overview', link: 'user-overview' },
+      { name: '• Schedule', link: 'user-schedule' },
+      { name: '• Resources', link: 'add-class' },
+      { name: '• User Management', link: 'user-management' },
+      { name: '• Add User', link: 'add-user' },
+      { name: '• SchoolSM', link: 'student-class-section' },
+    ],
+    roles: ['admin'],
+  },
+  {
+    title: 'Info',
+    icon: <BsFillInfoCircleFill className={`w-5 h-5 ${activeSection === 'info' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
+    subMenuItems: [
+      { name: '• Overview', link: 'user-overview' },
+      { name: '• Schedule', link: 'user-schedule' },
+      { name: '• Resources', link: 'add-class' },
+      { name: '• User Management', link: 'user-management' },
+      { name: '• Add User', link: 'add-user' },
+      { name: '• SchoolSM', link: 'student-class-section' },
+    ],
+    roles: ['admin'],
+  },
+];
+
   return (
     <div className="overflow-y-auto overflow-x-hidden h-full rounded-md bg-primary/70 dark:bg-darkbg1">
-      <div className={`h-auto ${isExpanded ? 'w-64' : 'w-28'} rounded-md transition-all duration-300`}>
-        <div className="h-full  rounded-md">
-          <div id='top' className='flex items-center pt-2 backdrop-blur sticky top-0'>
+      <div
+        className={`h-full ${
+          isExpanded ? "w-64" : "w-28"
+        } rounded-md transition-all duration-300`}
+      >
+        <div className="h-full flex flex-col">
+          <div
+            id="top"
+            className="flex items-center pt-2 backdrop-blur sticky top-0"
+          >
             <div className={`w-full flex items-center justify-center`}>
-              <TbHexagonLetterSFilled className='size-8 text-blue-500 dark:text-white' />
-              <p className={`ml-3 text-2xl font-bold text-blue-500 dark:text-white ${isExpanded ? null : 'hidden'}`}>School Sync</p>
+              <TbHexagonLetterSFilled className="size-8 text-blue-500 dark:text-white" />
+              <p
+                className={`ml-3 text-2xl font-bold text-blue-500 dark:text-white ${
+                  isExpanded ? null : "hidden"
+                }`}
+              >
+                School Sync
+              </p>
             </div>
-            <div className='-mr-[11px] ml-auto'>
+            <div className="-mr-[11px] ml-auto">
               <Hamburger
                 toggled={isExpanded}
                 toggle={toggleSidebar}
-                size={14} />
+                size={14}
+              />
             </div>
           </div>
 
-          <div id='content' className='flex flex-col justify-center p-2 mt-4 '>
+          <div id="content" className="flex-grow flex flex-col p-2 mt-4">
             {menuItems.map((item, index) => (
               <div
                 key={index}
-                className={`p-2  ${activeSection === item.title.toLowerCase() ? 'active-section ripple bg-white/70 dark:bg-white/10' : ''} rounded-md ${rippleActive ? 'ripple-active' : ''}`}>
-
+                className={`p-2 ${
+                  activeSection === item.title.toLowerCase()
+                    ? "active-section ripple bg-white/70 dark:bg-white/10"
+                    : ""
+                } rounded-md ${rippleActive ? "ripple-active" : ""}`}
+              >
                 <div
                   id={item.title.toLowerCase()}
-                  className={`${isExpanded ? 'flex-row' : 'flex-col'} flex items-center s`}
-                  onClick={() => toggleSection(item.title.toLowerCase())}>
+                  className={`${
+                    isExpanded ? "flex-row" : "flex-col"
+                  } flex items-center`}
+                  onClick={() => toggleSection(item.title.toLowerCase())}
+                >
                   {item.icon}
                   <p
-                    className={` ${isExpanded ? 'ml-2 text-lg font-semibold' : 'mt-2 text-lg font-semibold'} ${activeSection === item.title.toLowerCase() ? 'text-blue-500 dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`}>{item.title}</p>
+                    className={` ${
+                      isExpanded
+                        ? "ml-2 text-lg font-semibold"
+                        : "mt-2 text-lg font-semibold"
+                    } ${
+                      activeSection === item.title.toLowerCase()
+                        ? "text-blue-500 dark:text-white"
+                        : "text-gray-600 text-lg dark:text-white/70"
+                    }`}
+                  >
+                    {item.title}
+                  </p>
                 </div>
 
-                <div id={`slide-down-${item.title.toLowerCase()}`} className={`overflow-hidden transition-all duration-300 ${activeSection === item.title.toLowerCase() ? 'max-h-42' : 'max-h-0'}`}>
+                <div
+                  id={`slide-down-${item.title.toLowerCase()}`}
+                  className={`overflow-hidden transition-all duration-300 ${
+                    activeSection === item.title.toLowerCase()
+                      ? "max-h-42"
+                      : "max-h-0"
+                  }`}
+                >
                   <div className="items-center mt-1 ml-8">
                     {item.subMenuItems.map((subItem, subIndex) => (
-                      
                       <Link
                         key={subIndex}
                         to={subItem.link}
-                        className={`${isExpanded ? 'ml-2' : 'hidden text-lg'} block font-semibold  ${activeSubSection === subItem.name.toLowerCase() ? 'text-blue-500 dark:text-white' : 'text-gray-600 dark:text-white/60'}`}
-                        onClick={() => toggleSubSection(subItem.name.toLowerCase())}>
-                        {subItem.name} 
+                        className={`${
+                          isExpanded ? "ml-2" : "hidden text-lg"
+                        } block font-semibold ${
+                          activeSubSection === subItem.name.toLowerCase()
+                            ? "text-blue-500 dark:text-white"
+                            : "text-gray-600 dark:text-white/60"
+                        }`}
+                        onClick={() =>
+                          toggleSubSection(subItem.name.toLowerCase())
+                        }
+                      >
+                        {subItem.name}
                       </Link>
                     ))}
                   </div>
                 </div>
               </div>
             ))}
+
+            <div id='bottom' className='mt-auto'>
+              {/* Developer Settings Section */}
+              {developerSettings.map((devSetting, devIndex) => (
+                <div
+                  key={devIndex}
+                  className={`p-2  ${
+                    activeSection === devSetting.title.toLowerCase()
+                      ? "active-section ripple bg-white/70 dark:bg-white/10"
+                      : ""
+                  } rounded-md ${rippleActive ? "ripple-active" : ""}`}
+                >
+                  <div
+                    id={devSetting.title.toLowerCase()}
+                    className={`${
+                      isExpanded ? "flex-row" : "flex-col"
+                    } flex items-center`}
+                    onClick={() => toggleSection(devSetting.title.toLowerCase())}
+                  >
+                    {devSetting.icon}
+                    <p
+                      className={` ${
+                        isExpanded
+                          ? "ml-2 text-lg font-semibold"
+                          : "mt-2 text-lg font-semibold"
+                      } ${
+                        activeSection === devSetting.title.toLowerCase()
+                          ? "text-blue-500 dark:text-white"
+                          : "text-gray-600 text-lg dark:text-white/70"
+                      }`}
+                    >
+                      {devSetting.title}
+                    </p>
+                  </div>
+                  <div
+                    id={`slide-down-${devSetting.title.toLowerCase()}`}
+                    className={`overflow-hidden transition-all duration-300 ${
+                      activeSection === devSetting.title.toLowerCase()
+                        ? "max-h-42"
+                        : "max-h-0"
+                    }`}
+                  >
+                    <div className="items-center mt-1 ml-8">
+                      {devSetting.subMenuItems.map((subItem, subIndex) => (
+                        <Link
+                          key={subIndex}
+                          to={subItem.link}
+                          className={`${
+                            isExpanded ? "ml-2" : "hidden text-lg"
+                          } block font-semibold ${
+                            activeSubSection === subItem.name.toLowerCase()
+                              ? "text-blue-500 dark:text-white"
+                              : "text-gray-600 dark:text-white/60"
+                          }`}
+                          onClick={() => toggleSubSection(subItem.name.toLowerCase())}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                    
+                  </div>
+                </div>
+              ))}
+            </div>
+
+                
+
           </div>
         </div>
       </div>

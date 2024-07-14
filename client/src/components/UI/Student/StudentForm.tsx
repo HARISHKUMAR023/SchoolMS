@@ -231,7 +231,7 @@ const StudentForm: React.FC = () => {
                   value={formData.class}
                   onChange={handleChange}
                   required
-                  className="cursor-pointer mt-1 p-2 block w-full bg-black/10 border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
+                  className="cursor-pointer mt-1 p-2 block w-full bg-black/10 border-b border-gray-300 focus:border-b-black outline-none dark:text-white dark:bg-white/10  dark:focus:border-white"
                 >
                   <option value="" className="dark:bg-darkbg1 dark:text-white">Select Class</option>
                   {classOptions.map((cls) => (
@@ -250,7 +250,7 @@ const StudentForm: React.FC = () => {
                   value={formData.section}
                   onChange={handleChange}
                   required
-                  className="cursor-pointer mt-1 p-2 block w-full border-b bg-black/10 border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
+                  className="cursor-pointer mt-1 p-2 block w-full border-b bg-black/10 border-gray-300 focus:border-b-black outline-none dark:text-white dark:bg-white/10  dark:focus:border-white"
                 >
                   <option value="" className="dark:bg-darkbg1 dark:text-white">
                     Select Section

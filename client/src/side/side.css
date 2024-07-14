@@ -21,6 +21,18 @@ body::-webkit-scrollbar-thumb {
   border: 3px solid orange;  /* creates padding around scroll thumb */
 }
 
+/* Add necessary styles for the flex layout */
+
+.overflow-y-auto {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+
 /* Ripple effect */
 /* 
 .ripple {
