@@ -10,7 +10,9 @@ import { BiSolidReport } from "react-icons/bi";
 import { TbHexagonLetterSFilled } from "react-icons/tb";
 import { RiCodeBoxFill } from "react-icons/ri";
 import { BsFillInfoCircleFill } from "react-icons/bs";
+import Info from '../pages/Info'
 import './side.css';
+
 
 const Side = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -118,27 +120,19 @@ const Side = () => {
     icon: <RiCodeBoxFill className={`w-5 h-5 ${activeSection === 'developer settings' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
     subMenuItems: [
       { name: '• Overview', link: 'user-overview' },
-      { name: '• Schedule', link: 'user-schedule' },
-      { name: '• Resources', link: 'add-class' },
-      { name: '• User Management', link: 'user-management' },
-      { name: '• Add User', link: 'add-user' },
-      { name: '• SchoolSM', link: 'student-class-section' },
+      
     ],
     roles: ['admin'],
   },
-  {
-    title: 'Info',
-    icon: <BsFillInfoCircleFill className={`w-5 h-5 ${activeSection === 'info' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
-    subMenuItems: [
-      { name: '• Overview', link: 'user-overview' },
-      { name: '• Schedule', link: 'user-schedule' },
-      { name: '• Resources', link: 'add-class' },
-      { name: '• User Management', link: 'user-management' },
-      { name: '• Add User', link: 'add-user' },
-      { name: '• SchoolSM', link: 'student-class-section' },
-    ],
-    roles: ['admin'],
-  },
+  // {
+  //   title: 'Info',
+  //   icon: <BsFillInfoCircleFill className={`w-5 h-5 ${activeSection === 'info' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
+  //   subMenuItems: [
+  //     { name: '• Version -v1.1.0-beta', link: 'version' },
+  //     
+  //   ],
+  //   roles: ['admin'],
+  // },
 ];
 
   return (
@@ -172,14 +166,11 @@ const Side = () => {
             </div>
           </div>
 
-          <div id="content" className="flex-grow flex flex-col p-2 mt-4">
+          <div id="content" className="flex-grow flex flex-col p-2 mt-4 gap-2">
             {menuItems.map((item, index) => (
               <div
                 key={index}
-                className={`p-2 ${
-                  activeSection === item.title.toLowerCase()
-                    ? "active-section ripple bg-white/70 dark:bg-white/10"
-                    : ""
+                className={`p-2  ${activeSection === item.title.toLowerCase()? "active-section ripple bg-white/70 dark:bg-white/10" : "hover:bg-white/50 dark:hover:bg-white/5 cursor-pointer"
                 } rounded-md ${rippleActive ? "ripple-active" : ""}`}
               >
                 <div
@@ -198,7 +189,7 @@ const Side = () => {
                     } ${
                       activeSection === item.title.toLowerCase()
                         ? "text-blue-500 dark:text-white"
-                        : "text-gray-600 text-lg dark:text-white/70"
+                        : "text-gray-600 text-lg dark:text-white/70 "
                     }`}
                   >
                     {item.title}
@@ -213,17 +204,17 @@ const Side = () => {
                       : "max-h-0"
                   }`}
                 >
-                  <div className="items-center mt-1 ml-8">
+                  <div className="items-center mt-1 ml-8 space-y-2">
                     {item.subMenuItems.map((subItem, subIndex) => (
                       <Link
                         key={subIndex}
                         to={subItem.link}
                         className={`${
-                          isExpanded ? "ml-2" : "hidden text-lg"
+                          isExpanded ? "ml-2 " : "hidden text-lg"
                         } block font-semibold ${
                           activeSubSection === subItem.name.toLowerCase()
                             ? "text-blue-500 dark:text-white"
-                            : "text-gray-600 dark:text-white/60"
+                            : "text-gray-600 dark:text-white/60 hover:text-blue-500/75 dark:hover:text-white/80"
                         }`}
                         onClick={() =>
                           toggleSubSection(subItem.name.toLowerCase())
@@ -242,24 +233,24 @@ const Side = () => {
               {developerSettings.map((devSetting, devIndex) => (
                 <div
                   key={devIndex}
-                  className={`p-2  ${
+                  className={`p-2 space-y-2 ${
                     activeSection === devSetting.title.toLowerCase()
                       ? "active-section ripple bg-white/70 dark:bg-white/10"
-                      : ""
+                      : "hover:bg-white/50 dark:hover:bg-white/5 cursor-pointer"
                   } rounded-md ${rippleActive ? "ripple-active" : ""}`}
                 >
                   <div
                     id={devSetting.title.toLowerCase()}
                     className={`${
                       isExpanded ? "flex-row" : "flex-col"
-                    } flex items-center`}
+                    } flex items-center `}
                     onClick={() => toggleSection(devSetting.title.toLowerCase())}
                   >
                     {devSetting.icon}
                     <p
-                      className={` ${
+                      className={`text-center ${
                         isExpanded
-                          ? "ml-2 text-lg font-semibold"
+                          ? "ml-2 text-lg font-semibold "
                           : "mt-2 text-lg font-semibold"
                       } ${
                         activeSection === devSetting.title.toLowerCase()
@@ -272,38 +263,47 @@ const Side = () => {
                   </div>
                   <div
                     id={`slide-down-${devSetting.title.toLowerCase()}`}
-                    className={`overflow-hidden transition-all duration-300 ${
+                    className={`overflow-hidden transition-all duration-300  ${
                       activeSection === devSetting.title.toLowerCase()
-                        ? "max-h-42"
+                        ? "max-h-42 "
                         : "max-h-0"
                     }`}
                   >
-                    <div className="items-center mt-1 ml-8">
+                    <div className="items-center mt-1 ml-8 space-y-2">
                       {devSetting.subMenuItems.map((subItem, subIndex) => (
                         <Link
                           key={subIndex}
                           to={subItem.link}
-                          className={`${
-                            isExpanded ? "ml-2" : "hidden text-lg"
-                          } block font-semibold ${
+                          className={` ${
+                            isExpanded ? "ml-2 " : "hidden text-lg"
+                          } block font-semibold   ${
                             activeSubSection === subItem.name.toLowerCase()
                               ? "text-blue-500 dark:text-white"
-                              : "text-gray-600 dark:text-white/60"
+                              : "text-gray-600 dark:text-white/60 hover:text-blue-500/75 dark:hover:text-white/80"
                           }`}
                           onClick={() => toggleSubSection(subItem.name.toLowerCase())}
-                        >
+                        > 
                           {subItem.name}
                         </Link>
                       ))}
                     </div>
-                    
                   </div>
                 </div>
               ))}
             </div>
-
-                
-
+            
+            <hr className='bg-gradient-to-r from-transparent via-gray-600 to-transparent mx-2 h-[2px]'/>
+            
+            <div className={`w-full p-2 flex items-center  hover:bg-white/50 dark:hover:bg-white/5 cursor-pointer 
+                              ${isExpanded ? "flex-row" : "flex-col text-center"}`}>
+            
+              <BsFillInfoCircleFill className='size-5 text-gray-600  dark:text-white/70' />
+              <div className='ml-2 text-gray-600  dark:text-white/70 '>
+                <p className={`font-semibold 
+                              ${isExpanded ? "text-sm " : "text-xs my-2"}`}>Version Info</p>
+                <p className='text-xs '>Version -v1.0.0-beta</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

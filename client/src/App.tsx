@@ -18,6 +18,7 @@ import PublicRoute from './components/layout/PublicRoute';
 import Mystudent from './pages/Staff/Mystudent';
 import SubmitHomework from './pages/Service/SubmitHomework';
 import Side from './side/side'
+import Info from './pages/Info'
 
 const router = createBrowserRouter([
   {
@@ -157,7 +158,15 @@ const router = createBrowserRouter([
   {
     path: "/side",
     element: <Side />,
-  }
+  },
+  {
+    path: "/info23",
+    element: (
+      <PublicRoute>
+        <Info />
+      </PublicRoute>
+    ),
+  },
   
   
 ]);
