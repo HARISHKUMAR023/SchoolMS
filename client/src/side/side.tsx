@@ -10,7 +10,7 @@ import { BiSolidReport } from "react-icons/bi";
 import { TbHexagonLetterSFilled } from "react-icons/tb";
 import { RiCodeBoxFill } from "react-icons/ri";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import Info from '../pages/Info'
+// import Info from '../pages/Info'
 import './side.css';
 
 
