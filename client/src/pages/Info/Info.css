@@ -1,0 +1,123 @@
+/* Info.css */
+
+/* Style the markdown body */
+.markdown-body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #24292e; /* GitHub's text color */
+  }
+  
+  /* Style headings */
+  .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  
+  .markdown-body h1 {
+    font-size: 2em;
+  }
+  
+  .markdown-body h2 {
+    font-size: 1.5em;
+  }
+  
+  .markdown-body h3 {
+    font-size: 1.25em;
+  }
+  
+  .markdown-body h4 {
+    font-size: 1em;
+  }
+  
+  .markdown-body h5 {
+    font-size: 0.875em;
+  }
+  
+  .markdown-body h6 {
+    font-size: 0.85em;
+    color: #6a737d; /* GitHub's secondary text color */
+  }
+  
+  /* Style paragraphs */
+  .markdown-body p {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  /* Style lists */
+  .markdown-body ul, .markdown-body ol {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  .markdown-body ul ul, .markdown-body ul ol, .markdown-body ol ul, .markdown-body ol ol {
+    margin-bottom: 0;
+  }
+  
+  .markdown-body li {
+    margin-bottom: 8px;
+  }
+  
+  /* Style links */
+  .markdown-body a {
+    color: #0366d6; /* GitHub's link color */
+    text-decoration: none;
+  }
+  
+  .markdown-body a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style code blocks */
+  .markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: #f6f8fa; /* GitHub's code block background color */
+    border-radius: 6px;
+    overflow: auto;
+    font-size: 85%;
+  }
+  
+  .markdown-body code {
+    color: #24292e; /* GitHub's text color */
+  }
+  
+  /* Style blockquotes */
+  .markdown-body blockquote {
+    margin: 0;
+    padding: 0 1em;
+    color: #6a737d; /* GitHub's secondary text color */
+    border-left: 0.25em solid #dfe2e5; /* GitHub's blockquote left border color */
+  }
+  
+  /* Style inline code */
+  .markdown-body p code {
+    background-color: #f6f8fa; /* GitHub's inline code background color */
+    padding: 0.2em 0.4em;
+    font-size: 85%;
+    border-radius: 6px;
+  }
+  
+  /* Style tables */
+  .markdown-body table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    border-spacing: 0;
+    margin-bottom: 16px;
+    border-collapse: collapse;
+  }
+  
+  .markdown-body th {
+    font-weight: 600;
+  }
+  
+  .markdown-body td, .markdown-body th {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5; /* GitHub's table border color */
+  }
+  

@@ -10,7 +10,7 @@ const Footer = () => {
           <p className="text-xs hover:text-black dark:hover:text-white cursor-pointer">Copyright &copy; 2024. All rights reserved.</p>
           
           <div className="flex items-center text-xs gap-3">
-            <p className="text-xs hover:text-black dark:hover:text-white cursor-pointer">&reg; HarishKumar & Co.</p>
+            <p className="text-xs hover:text-black dark:hover:text-white cursor-pointer">&reg; Harish & Co.</p>
             <p className="cursor-default">|</p>
             <p className="text-xs hover:text-black dark:hover:text-white cursor-pointer">Contact Us:</p>
             
