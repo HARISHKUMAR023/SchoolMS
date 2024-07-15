@@ -1,6 +1,5 @@
-// src/components/Calendar.tsx
 import React, { useState } from 'react';
-import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
+import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay, getDay } from 'date-fns';
 
 interface CalendarProps {
   currentMonth: Date;
@@ -56,10 +55,13 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
       const formattedDate = format(day, dateFormat);
       const isSameMonth = day >= monthStart && day <= monthEnd;
       const isToday = isSameDay(day, today);
+      const isSunday = getDay(day) === 0;
 
       daysInRow.push(
         <div
-          className={`w-1/7 text-center px-[46px] py-6 rounded-md shadow dark:hover:bg-white/10 hover:bg-white hover:shadow-md cursor-pointer ${isSameMonth ? 'text-black dark:text-white' : 'text-gray-400'} ${isToday ? 'bg-blue-500/20' : ''}`}
+          className={`w-1/7 text-center px-[46px] py-6 rounded-md shadow dark:hover:bg-white/10 hover:bg-white hover:shadow-md cursor-pointer 
+            ${isSameMonth ? (isSunday ? 'text-red-500' : 'text-black dark:text-white') : (isSunday ? 'text-red-300' : 'text-gray-400')} 
+            ${isToday ? 'bg-blue-500/20' : ''}`}
           key={index}
         >
           {formattedDate}
@@ -83,10 +85,14 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
     weekDays.forEach((day, index) => {
       const formattedDate = format(day, dateFormat);
       const isToday = isSameDay(day, today);
+      const isSunday = getDay(day) === 0;
+      const isSameMonth = day >= monthStart && day <= monthEnd;
 
       daysInRow.push(
         <div
-          className={`w-1/7 text-center px-[46px] py-6 text-black dark:text-white ${isToday ? 'bg-blue-500/20' : ''}`}
+          className={`w-1/7 text-center px-[46px] py-6 
+            ${isSunday ? (isSameMonth ? 'text-red-500' : 'text-red-300') : 'text-black dark:text-white'} 
+            ${isToday ? 'bg-blue-500/20' : ''}`}
           key={index}
         >
           {formattedDate}
@@ -103,7 +109,7 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
 
     return (
       <div
-        className={`text-center px-[46px] py-6 text-black dark:text-white  ${isToday ? 'bg-blue-500/20' : ''}`}
+        className={`text-center px-[46px] py-6 text-black dark:text-white ${isToday ? 'bg-blue-500/20' : ''}`}
       >
         {formattedDate}
       </div>
@@ -111,10 +117,10 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
   };
 
   return (
-    <div className="p-4 dark:bg-white/10 bg-white/50 shadow rounded-lg  dark:text-white">
+    <div className="p-4 dark:bg-white/10 bg-white/50 shadow rounded-lg dark:text-white">
       <h2 className="text-xl font-bold mb-4 text-black dark:text-white">Academic Calendar</h2>
       <div className="mb-4">
-        <button className={`px-4 py-2 mr-2 rounded ${view === 'month' ? 'bg-red-500 text-white ' : 'bg-gray-300 dark:text-black'}`} onClick={() => setView('month')}>Month</button>
+        <button className={`px-4 py-2 mr-2 rounded ${view === 'month' ? 'bg-red-500 text-white' : 'bg-gray-300 dark:text-black'}`} onClick={() => setView('month')}>Month</button>
         <button className={`px-4 py-2 mr-2 rounded ${view === 'week' ? 'bg-red-500 text-white' : 'bg-gray-300 dark:text-black'}`} onClick={() => setView('week')}>Week</button>
         <button className={`px-4 py-2 rounded ${view === 'day' ? 'bg-red-500 text-white' : 'bg-gray-300 dark:text-black'}`} onClick={() => setView('day')}>Day</button>
       </div>

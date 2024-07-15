@@ -1,30 +1,47 @@
-# React + TypeScript + Vite
+# School Management Web Application - v1.0.0-beta
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to our School Management Web Application repository! This application is designed to meet all your school management needs efficiently and securely.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Homework Management**: Send homework assignments directly to students via messages.
+- **Student Management**: Add and manage student details effortlessly.
+- **Employee Management**: Includes teachers and other staff members.
+- **Role-Based Access**: Dynamic access control based on user roles.
+- **Role-Based Dashboards**: Customized dashboards for each user role.
+- **Integrated Academic Calendar**: Utilizes the Academic Calendar component from MUI for scheduling.
 
-## Expanding the ESLint configuration
+## Dependencies
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React**: A JavaScript library for building user interfaces.
+- **Redux**: State management library for React applications.
+- **Firebase**: Platform for building web and mobile applications.
+- **MUI (Material-UI)**: React components for faster and easier web development.
+- **Axios**: Promise-based HTTP client for making API requests.
+- **Formik**: Form library for React to handle form validation and submission.
+- **React Router DOM**: Declarative routing for React applications.
+- **React Markdown**: Renders Markdown content as React components.
+- **Remark GFM**: GitHub Flavored Markdown plugin for remark.
+- **Remark HTML**: Plugin to transform Markdown into HTML.
+- **And more**: Various utilities and plugins for enhanced functionality.
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+To get started with the School Management Web Application:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Clone this repository.
+2. Install dependencies using `yarn install`.
+3. Start the development server using `yarn dev`.
+4. Explore the application and its features.
+
+## Contributing
+
+We welcome contributions to improve the School Management Web Application. Feel free to submit issues and pull requests.
+
+## Versioning
+
+This project follows [Semantic Versioning (SemVer)](https://semver.org/). The current version is v1.0.0-beta.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.

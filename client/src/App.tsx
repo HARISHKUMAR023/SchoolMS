@@ -161,11 +161,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/info23",
-    element: (
-      <PublicRoute>
+    element:      
         <Info />
-      </PublicRoute>
-    ),
   },
   
   
