@@ -2,7 +2,7 @@ const Student = require('../models/Student');
 const Class = require('../models/SudentClass')
 const { validationResult } = require('express-validator');
 const path = require('path');
-
+const logger = require('pino')()
 
 
 exports.getsudentByTeacherid = async (req, res)=>{
@@ -16,6 +16,7 @@ exports.getsudentByTeacherid = async (req, res)=>{
     // Fetch students belonging to these classes
     const students = await Student.find({ class: { $in: classIds } }).populate('class section');
     // console.log(students)
+    
     res.json(students);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -28,6 +29,7 @@ exports.getsudentByTeacherid = async (req, res)=>{
 exports.getAllStudents = async (req, res) => {
   try {
     const students = await Student.find();
+    logger.info("student detials is  feached")
     res.status(200).json(students);
   } catch (error) {
     res.status(500).json({ message: error.message });

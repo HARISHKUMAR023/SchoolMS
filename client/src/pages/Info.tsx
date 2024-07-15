@@ -9,7 +9,7 @@ const Info = () => {
 
   useEffect(() => {
     // Fetch the README.md file
-    fetch('/path/to/README.md')
+    fetch('./README.md')
       .then((response) => response.text())
       .then((text) => setReadmeContent(text));
   }, []);

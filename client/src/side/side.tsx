@@ -62,7 +62,7 @@ const Side = () => {
       title: 'Students',
       icon: <PiStudentFill className={`w-5 h-5 ${activeSection === 'students' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
-        { name: '• Attendance', link: 'student-attendance' },
+        { name: '• Attendance', link: 'StudentAttendance' },
         { name: '• Message', link: 'submit-homework' }
       ],
       roles: ['admin', 'teacher'],
@@ -87,7 +87,7 @@ const Side = () => {
       title: 'Classes',
       icon: <SiGoogleclassroom className={`w-5 h-5 ${activeSection === 'classes' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
-        { name: '• My Students', link: 'my-students' }
+        { name: '• My Students', link: 'mysudent' }
       ],
       roles: ['• admin', 'teacher', 'student'],
     },
@@ -106,8 +106,8 @@ const Side = () => {
         { name: '• Overview', link: 'user-overview' },
         { name: '• Schedule', link: 'user-schedule' },
         { name: '• Resources', link: 'add-class' },
-        { name: '• User Management', link: 'user-management' },
-        { name: '• Add User', link: 'add-user' },
+        { name: '• User Management', link: 'userTable' },
+        { name: '• Add User', link: 'Adduser' },
         { name: '• SchoolSM', link: 'student-class-section' },
       ],
       roles: ['admin'],
