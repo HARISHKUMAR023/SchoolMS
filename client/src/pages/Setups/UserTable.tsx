@@ -36,7 +36,12 @@ const UserTable: React.FC = () => {
 
   const toggleUserStatus = async (userId: string, currentStatus: boolean) => {
     try {
-      await axios.put(`http://localhost:5000/api/auth/users/${userId}`, { active: !currentStatus });
+      const token = localStorage.getItem('token');
+
+      await axios.put(`http://localhost:5000/api/auth/users/${userId}`, { active: !currentStatus ,  
+        headers: {
+        'Authorization': `Bearer ${token}`
+      }});
       setUsers(users.map(user => user._id === userId ? { ...user, active: !currentStatus } : user));
       toast.success('User status updated successfully');
     } catch (error) {

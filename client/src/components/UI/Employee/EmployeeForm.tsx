@@ -89,13 +89,13 @@ const EmployeeForm: React.FC = () => {
         // resetForm();
       } catch (error) {
         console.error('There was an error submitting the form!', error);
-        toast.error('There was an error submitting the form!');
+        toast.warning('Error adding Employee');
       }
     },
   });
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white dark:bg-white/10 shadow-gray-500 dark:shadow-black rounded-lg shadow-md">
+    <div className="max-w-6xl mx-auto p-6 bg-white/60 dark:bg-white/10 shadow-gray-500 dark:shadow-black rounded-lg shadow-md">
          <ToastContainer />
       <h2 className="text-2xl font-bold mb-4">Employee Form</h2>
       <form onSubmit={formik.handleSubmit} className=''>
@@ -197,7 +197,7 @@ const EmployeeForm: React.FC = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.employeeType}
-                  className="dark:text-white cursor-pointer mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
+                  className="dark:text-white cursor-pointer bg-black/10 mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
                 >
                   <option value="teacher" className="dark:bg-darkbg1 dark:text-white">Teacher</option>
                   <option value="driver" className="dark:bg-darkbg1 dark:text-white">Driver</option>

@@ -17,6 +17,9 @@ import ProtectedRoute from './components/layout/ProtectedRoute';
 import PublicRoute from './components/layout/PublicRoute';
 import Mystudent from './pages/Staff/Mystudent';
 import SubmitHomework from './pages/Service/SubmitHomework';
+import Side from './side/side'
+import Info from './pages/Info'
+
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -152,6 +155,18 @@ const router = createBrowserRouter([
     element: <Unauthorized />,
   },
 
+  {
+    path: "/side",
+    element: <Side />,
+  },
+  {
+    path: "/info23",
+    element: (
+      <PublicRoute>
+        <Info />
+      </PublicRoute>
+    ),
+  },
   
   
 ]);

@@ -22,15 +22,15 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className='flex justify-between items-center p-2 bg-white/90 dark:bg-darkbg2/10 backdrop:blur-md border-b dark:border-gray-300
-                    shadow-md shadow-black border-darkbg2'>
+    <div className='flex justify-between items-center p-2 bg-primary/70 dark:bg-darkbg1 border-b dark:border-gray-300
+                    shadow-md border-darkbg2 bg-opacity-70 backdrop-blur-sm rounded-md'>
       <div className='flex items-center'>
         <Breadcrumb />
       </div>
       <div className='mr-3 flex flex-row gap-x-3 items-center'>
         <ThemeToggle />
-        <IoMdNotifications className='size-6 hover:shadow' />
-        <h2 className=''>Harish</h2>
+        <IoMdNotifications className='size-6 hover:shadow dark:text-white' />
+        <h2 className='dark:text-white'>Harish</h2>
         <img
           src={proimg}
           alt="Profile image"
