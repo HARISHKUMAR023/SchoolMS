@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
+import './Info.css'
 
 const Info = () => {
   const [readmeContent, setReadmeContent] = useState('');

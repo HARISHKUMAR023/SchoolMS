@@ -1,6 +1,7 @@
-# School Management Web Application - v1.0.0-beta
+# School Sync - v1.0.0-beta
+## A School ManagementWeb Application
 
-Welcome to our School Management Web Application repository! This application is designed to meet all your school management needs efficiently and securely.
+Welcome to our School Sync repository! This application is designed to meet all your school management needs efficiently and securely.
 
 ## Features
 
