@@ -18,8 +18,6 @@ import PublicRoute from './components/layout/PublicRoute';
 import Mystudent from './pages/Staff/Mystudent';
 import SubmitHomework from './pages/Service/SubmitHomework';
 import Logmanagement from './pages/Logmanagement/Logmanagement';
-import Side from './side/side';
-import Info from './pages/Info'
 import Side from './side/side'
 import Info from './pages/Info/Info'
 
@@ -175,6 +173,7 @@ const router = createBrowserRouter([
     element: (
      
         <Info />
+    )
   },
   
   
