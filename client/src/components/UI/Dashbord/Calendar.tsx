@@ -1,6 +1,6 @@
 // src/components/Calendar.tsx
-import React from 'react';
-import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, } from 'date-fns';
+import React, { useState } from 'react';
+import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
 
 interface CalendarProps {
   currentMonth: Date;
@@ -9,8 +9,13 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMonth }) => {
+  const [view, setView] = useState<'month' | 'week' | 'day'>('month');
+  const today = new Date();
+
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
+  const weekStart = startOfWeek(currentMonth);
+  const weekEnd = endOfWeek(currentMonth);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
 
@@ -19,13 +24,13 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
   const renderHeader = () => {
     return (
       <div className="flex justify-between items-center mb-4">
-        <button onClick={onPrevMonth} className="text-blue-500 dark:hover:bg-darkbg1 mx-2 px-2 rounded-lg">
+        <button onClick={onPrevMonth} className="text-blue-500 hover:bg-white dark:text-white dark:hover:bg-darkbg1 mx-2 px-2 rounded-lg">
           &lt;
         </button>
         <span className="text-xl font-semibold">
           {format(currentMonth, 'MMMM yyyy')}
         </span>
-        <button onClick={onNextMonth} className="text-blue-500 dark:hover:bg-darkbg1 mx-2 px-2 rounded-lg">
+        <button onClick={onNextMonth} className="text-blue-500 hover:bg-white dark:text-white dark:hover:bg-darkbg1 mx-2 px-2 rounded-lg">
           &gt;
         </button>
       </div>
@@ -42,7 +47,7 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
     return <div className="flex">{daysOfWeek}</div>;
   };
 
-  const renderCells = () => {
+  const renderMonthCells = () => {
     const dateFormat = 'dd';
     const rows: React.ReactNode[] = [];
     let daysInRow: React.ReactNode[] = [];
@@ -50,10 +55,11 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
     days.forEach((day, index) => {
       const formattedDate = format(day, dateFormat);
       const isSameMonth = day >= monthStart && day <= monthEnd;
+      const isToday = isSameDay(day, today);
 
       daysInRow.push(
         <div
-          className={`w-1/7 text-center px-[46px] py-6  ${isSameMonth ? 'text-black dark:text-white' : 'text-gray-400'}`}
+          className={`w-1/7 text-center px-[46px] py-6 rounded-md shadow dark:hover:bg-white/10 hover:bg-white hover:shadow-md cursor-pointer ${isSameMonth ? 'text-black dark:text-white' : 'text-gray-400'} ${isToday ? 'bg-blue-500/20' : ''}`}
           key={index}
         >
           {formattedDate}
@@ -69,17 +75,54 @@ const Calendar: React.FC<CalendarProps> = ({ currentMonth, onNextMonth, onPrevMo
     return <div>{rows}</div>;
   };
 
+  const renderWeekCells = () => {
+    const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+    const dateFormat = 'dd';
+    const daysInRow: React.ReactNode[] = [];
+
+    weekDays.forEach((day, index) => {
+      const formattedDate = format(day, dateFormat);
+      const isToday = isSameDay(day, today);
+
+      daysInRow.push(
+        <div
+          className={`w-1/7 text-center px-[46px] py-6 text-black dark:text-white ${isToday ? 'bg-blue-500/20' : ''}`}
+          key={index}
+        >
+          {formattedDate}
+        </div>
+      );
+    });
+
+    return <div className="flex">{daysInRow}</div>;
+  };
+
+  const renderDayCell = () => {
+    const formattedDate = format(currentMonth, 'dd');
+    const isToday = isSameDay(currentMonth, today);
+
+    return (
+      <div
+        className={`text-center px-[46px] py-6 text-black dark:text-white  ${isToday ? 'bg-blue-500/20' : ''}`}
+      >
+        {formattedDate}
+      </div>
+    );
+  };
+
   return (
-    <div className="p-4 dark:bg-darkbg2 bg-white shadow rounded-lg">
+    <div className="p-4 dark:bg-white/10 bg-white/50 shadow rounded-lg  dark:text-white">
       <h2 className="text-xl font-bold mb-4 text-black dark:text-white">Academic Calendar</h2>
       <div className="mb-4">
-        <button className="bg-red-500 text-white px-4 py-2 mr-2 rounded">Month</button>
-        <button className="bg-gray-300 px-4 py-2 mr-2 rounded">Week</button>
-        <button className="bg-gray-300 px-4 py-2 rounded">Day</button>
+        <button className={`px-4 py-2 mr-2 rounded ${view === 'month' ? 'bg-red-500 text-white ' : 'bg-gray-300 dark:text-black'}`} onClick={() => setView('month')}>Month</button>
+        <button className={`px-4 py-2 mr-2 rounded ${view === 'week' ? 'bg-red-500 text-white' : 'bg-gray-300 dark:text-black'}`} onClick={() => setView('week')}>Week</button>
+        <button className={`px-4 py-2 rounded ${view === 'day' ? 'bg-red-500 text-white' : 'bg-gray-300 dark:text-black'}`} onClick={() => setView('day')}>Day</button>
       </div>
       {renderHeader()}
       {renderDaysOfWeek()}
-      {renderCells()}
+      {view === 'month' && renderMonthCells()}
+      {view === 'week' && renderWeekCells()}
+      {view === 'day' && renderDayCell()}
     </div>
   );
 };

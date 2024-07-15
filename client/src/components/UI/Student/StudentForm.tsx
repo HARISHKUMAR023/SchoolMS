@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import './StudentForm.css'
 interface ClassSection {
   _id: string;
   name: string;
@@ -168,23 +169,29 @@ const StudentForm: React.FC = () => {
       setImagePreviewUrl('');
     } catch (error) {
       console.error(error);
+      toast.warning('Error adding student');
+
     }
   };
 
   return ( 
-      <div className="max-w-6xl mx-auto p-6 bg-white dark:bg-white/10 shadow-gray-500 dark:shadow-black rounded-lg shadow-md">
+      <div className="max-w-6xl mx-auto p-6 bg-white/60 dark:bg-white/10 shadow-gray-500 dark:shadow-black rounded-lg shadow-md">
        <ToastContainer />
         <h2 className="text-2xl font-bold mb-4">Studednts Form</h2>
         <form onSubmit={handleSubmit}>
           <div id='photo'>
             <label className="block text-sm font-medium dark:text-white text-gray-700 mb-1">Photo</label>
-            <input type="file" name="photo" onChange={handleFileChange} />
-          </div>
-               {imagePreviewUrl && (
+
+            {imagePreviewUrl && (
         <div>
-          <img src={imagePreviewUrl} alt="Preview" style={{ width: '100px', height: '100px' }} />
+          <img src={imagePreviewUrl} 
+               alt="Preview" 
+               className='mb-2 mt-2 size-28'/>
           </div>
          )}
+            <input type="file" name="photo" onChange={handleFileChange} className='bg-transparent' />
+          </div>
+               
           <div id="full" className="flex w-full gap-x-8 mt-4">
             <div id="left" className="w-full space-y-4">
              <div>
@@ -224,7 +231,7 @@ const StudentForm: React.FC = () => {
                   value={formData.class}
                   onChange={handleChange}
                   required
-                  className="cursor-pointer mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
+                  className="cursor-pointer mt-1 p-2 block w-full bg-black/10 border-b border-gray-300 focus:border-b-black outline-none dark:text-white dark:bg-white/10  dark:focus:border-white"
                 >
                   <option value="" className="dark:bg-darkbg1 dark:text-white">Select Class</option>
                   {classOptions.map((cls) => (
@@ -243,7 +250,7 @@ const StudentForm: React.FC = () => {
                   value={formData.section}
                   onChange={handleChange}
                   required
-                  className="cursor-pointer mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
+                  className="cursor-pointer mt-1 p-2 block w-full border-b bg-black/10 border-gray-300 focus:border-b-black outline-none dark:text-white dark:bg-white/10  dark:focus:border-white"
                 >
                   <option value="" className="dark:bg-darkbg1 dark:text-white">
                     Select Section
@@ -436,10 +443,12 @@ const StudentForm: React.FC = () => {
                   className="mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
                 />
               </div>
-              <button 
+
+              <div className='flex'><button 
                 type="submit"
-                className="mt-4 p-2 bg-red-500 hover:bg-red-600 text-white rounded-md"
-                >Submit</button>    
+                className="mt-4 p-2 bg-red-500 hover:bg-red-600 text-white rounded-md ml-auto"
+                >Submit</button>    </div>
+
             </div>
           </div>
           

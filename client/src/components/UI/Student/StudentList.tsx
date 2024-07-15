@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import { FaEye } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+
 interface Student {
   _id: string;
   photo: string;
@@ -24,13 +25,14 @@ const StudentList: React.FC = () => {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [studentsPerPage] = useState(10);
+  const [studentsPerPage, setStudentsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterClass, setFilterClass] = useState('');
   const [filterBloodGroup, setFilterBloodGroup] = useState('');
   const printRef = useRef<HTMLDivElement | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -195,7 +197,7 @@ const StudentList: React.FC = () => {
 
   return (
     <div className="container mx-auto py-6 px-4 dark:bg-darkbg2 bg-primarybg rounded-lg shadow max-h-full">
-      <h2 className="text-2xl font-bold mb-6 text-center">Student List</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center dark:text-white">Student List</h2>
       <div className="mb-4 flex justify-between">
         <input 
           type="text" 
@@ -204,23 +206,23 @@ const StudentList: React.FC = () => {
           onChange={handleSearch} 
           className="p-2 rounded dark:bg-white/10 outline-none bg-gray-200/60 dark:text-white"
         />
-        <select value={filterClass} onChange={handleFilterClass} className="p-2 rounded bg-gray-200/60  dark:bg-white/10 outline-none">
-          <option className='dark:text-black dark:bg-white/10' value="">All Classes</option>
-          <option className='dark:text-black dark:bg-white/10' value="Class 1">Class 1</option>
-          <option className='dark:text-black dark:bg-white/10' value="Class 2">Class 2</option>
+        <select value={filterClass} onChange={handleFilterClass} className="p-2 rounded bg-gray-200/60  dark:bg-white/10 dark:text-white outline-none">
+          <option className='dark:text-white dark:bg-darkbg1' value="">All Classes</option>
+          <option className='dark:text-white dark:bg-darkbg1' value="Class 1">Class 1</option>
+          <option className='dark:text-white dark:bg-darkbg1' value="Class 2">Class 2</option>
           {/* Add more class options as needed */}
         </select>
-        <select value={filterBloodGroup} onChange={handleFilterBloodGroup} className="p-2 rounded bg-gray-200/60 dark:bg-white/10 outline-none">
-          <option className='dark:text-black dark:bg-white/10' value="">All Blood Groups</option>
-          <option className='dark:text-black dark:bg-white/10' value="A+">A+</option>
-          <option className='dark:text-black dark:bg-white/10' value="B+">B+</option>
+        <select value={filterBloodGroup} onChange={handleFilterBloodGroup} className="p-2 rounded bg-gray-200/60 dark:bg-white/10 dark:text-white outline-none">
+          <option className='dark:text-white dark:bg-darkbg1' value="">All Blood Groups</option>
+          <option className='dark:text-white dark:bg-darkbg1' value="A+">A+</option>
+          <option className='dark:text-white dark:bg-darkbg1' value="B+">B+</option>
           {/* Add more blood group options as needed */}
         </select>
       </div>
       <div className="bg-white dark:bg-white/10 shadow-md rounded overflow-hidden">
         <table className="min-w-full ">
           <thead>
-            <tr className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
+            <tr className="bg-gray-300 dark:bg-white/10 dark:text-white text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">Name</th>
               <th className="py-3 px-6 text-left">DOB</th>
               <th className="py-3 px-6 text-left">Class</th>
@@ -238,13 +240,13 @@ const StudentList: React.FC = () => {
                 <td className="py-1 px-6 text-left">
                   <button 
                     onClick={() => handleViewMore(student)} 
-                    className="bg-blue-500 px-2 py-1 rounded text-white dark:text-blue-400 hover:text-blue-700 focus:outline-none"
+                    className="bg-blue-500 px-2 py-1 rounded text-white hover:bg-blue-700 focus:outline-none"
                   >
                     <FaEye />
                   </button>
                   <button 
                     onClick={() => handleViewMore(student)} 
-                    className="bg-yellow-500 px-2 py-1 rounded text-white dark:text-yellow-400 hover:text-yellow-700 focus:outline-none mx-1"
+                    className="bg-yellow-500 px-2 py-1 rounded text-white  hover:bg-yellow-700 focus:outline-none mx-1"
                   >
                     <FaEdit />
                   </button>
@@ -260,20 +262,31 @@ const StudentList: React.FC = () => {
           </tbody>
         </table>
       </div>
-
+      
       <div className="flex justify-between mt-4">
+        <p className='dark:text-white'>Total records: {students.length}</p>
+        <div className="flex items-center">
+          <label htmlFor="studentsPerPage" className="mr-2 dark:text-white">Records per page:</label>
+          <input
+            type="number"
+            id="studentsPerPage"
+            value={studentsPerPage}
+            onChange={(e) => setStudentsPerPage(Number(e.target.value))}
+            className="p-2 rounded bg-gray-200/60 dark:bg-white/10 dark:text-white outline-none w-16 text-center"
+          />
+        </div>
         <button 
           onClick={handlePrevPage} 
           disabled={currentPage === 1}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+          className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 hover:text-white cursor-pointer"
         >
           Previous
         </button>
-        <span>Page {currentPage} of {totalPages}</span>
+        <span className='dark:text-white'>Page {currentPage} of {totalPages}</span>
         <button 
           onClick={handleNextPage} 
           disabled={currentPage === totalPages}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+          className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 hover:text-white cursor-pointer"
         >
           Next
         </button>
@@ -320,9 +333,7 @@ const StudentList: React.FC = () => {
         </div>
       )}
 
-
-      
-{isDeleteModalOpen && studentToDelete && (
+      {isDeleteModalOpen && studentToDelete && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="bg-white rounded-lg shadow-lg p-6 relative w-full max-w-md dark:bg-darkbg2 dark:text-white">

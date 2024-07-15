@@ -10,7 +10,9 @@ export default {
       colors: {
         darkbg1: '#333333',
         darkbg2: '#262626',
-        primarybg: '#ffffff'
+        primarybg: '#ffffff',
+        primary: '#dbeafe',
+        secondary: '#ffffff',
       },
 
       animation: {

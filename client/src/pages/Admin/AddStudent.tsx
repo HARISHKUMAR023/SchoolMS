@@ -2,7 +2,7 @@
 import StudentForm from "../../components/UI/Student/StudentForm"
 const AddStudent = () => {
   return (
-    <div>
+    <div className="">
       <StudentForm />
     </div>
   )

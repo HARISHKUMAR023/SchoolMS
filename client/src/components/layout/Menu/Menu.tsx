@@ -144,7 +144,7 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
           ""
       )}
       
-      <button
+      <button id='toggle-button'
         className="text-white hover:text-red-500 cursor-pointer ml-auto mr-1"
         onClick={toggleMenu}
       >
@@ -153,7 +153,7 @@ const Menu: React.FC<MenuProps> = ({ role }) => {
       
       </div>
 
-      <ul className="p-4 overflow-y-auto">
+      <ul className="p-4 overflow-x-hidden overflow-y-auto">
         {menuItems.map(
           (menuItem, index) =>
             menuItem.roles.includes(role || "") && (

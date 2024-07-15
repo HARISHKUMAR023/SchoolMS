@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import '../Student/StudentForm.css'
+
 const initialValues = {
   name: '',
   dob: '',
@@ -87,13 +89,13 @@ const EmployeeForm: React.FC = () => {
         // resetForm();
       } catch (error) {
         console.error('There was an error submitting the form!', error);
-        toast.error('There was an error submitting the form!');
+        toast.warning('Error adding Employee');
       }
     },
   });
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white dark:bg-white/10 shadow-black rounded-lg shadow-md">
+    <div className="max-w-6xl mx-auto p-6 bg-white/60 dark:bg-white/10 shadow-gray-500 dark:shadow-black rounded-lg shadow-md">
          <ToastContainer />
       <h2 className="text-2xl font-bold mb-4">Employee Form</h2>
       <form onSubmit={formik.handleSubmit} className=''>
@@ -107,7 +109,8 @@ const EmployeeForm: React.FC = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.name}
-                  className=" mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                  className=" mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none 
+                            dark:bg-white/10 dark:text-white dark:focus:border-white"
                 />
                 {formik.touched.name && formik.errors.name ? (
                   <div className="mt-1 rounded-full text-red-500 text-sm">{formik.errors.name}</div>
@@ -194,12 +197,12 @@ const EmployeeForm: React.FC = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.employeeType}
-                  className="cursor-pointer mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10 dark:text-white dark:focus:border-white"
+                  className="dark:text-white cursor-pointer bg-black/10 mt-1 p-2 block w-full border-b border-gray-300 focus:border-b-black outline-none dark:bg-white/10  dark:focus:border-white"
                 >
-                  <option value="teacher">Teacher</option>
-                  <option value="driver">Driver</option>
-                  <option value="conductor">Conductor</option>
-                  <option value="other">Other</option>
+                  <option value="teacher" className="dark:bg-darkbg1 dark:text-white">Teacher</option>
+                  <option value="driver" className="dark:bg-darkbg1 dark:text-white">Driver</option>
+                  <option value="conductor" className="dark:bg-darkbg1 dark:text-white">Conductor</option>
+                  <option value="other" className="dark:bg-darkbg1 dark:text-white">Other</option>
                 </select>
                 {formik.touched.employeeType && formik.errors.employeeType ? (
                   <div className="text-red-500 text-sm">{formik.errors.employeeType}</div>

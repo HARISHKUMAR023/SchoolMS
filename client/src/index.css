@@ -7,3 +7,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* custom-scrollbar.css */
+
+/* Light mode */
+::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* color of the thumb */
+  border-radius: 4px; /* roundness of the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* color of the thumb on hover */
+}
+
+/* Dark mode */
+.dark ::-webkit-scrollbar-track {
+  background: #333; /* dark mode color of the track */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #666; /* dark mode color of the thumb */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #999; /* dark mode color of the thumb on hover */
+}
