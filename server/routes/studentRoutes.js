@@ -11,5 +11,5 @@ router.post('/', upload.single('photo'), studentController.createStudent);
 router.put('/assign-class-section', studentController.assignClassSection);
 router.get('/teacher/:teacherId', studentController.getsudentByTeacherid);
 router.delete('/:id', studentController.deleteStudent);
-
+router.get('/cs',studentController.getStudentsByClassAndSection);
 module.exports = router;

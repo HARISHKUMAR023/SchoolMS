@@ -14,6 +14,10 @@ exports.SmsHomework = async (req, res) => {
 
     // Fetch students' phone numbers
     const students = await Student.find({ class: classId, section: sectionId });
+
+    if (students.length === 0) {
+      return res.status(404).json({ error: 'No students found for the provided class and section' });
+    }
     const phoneNumbers = students.map(student => student.phoneNumber);
      console.log(phoneNumbers);
     // Send SMS to students

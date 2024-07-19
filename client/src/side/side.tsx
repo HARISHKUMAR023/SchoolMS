@@ -63,7 +63,7 @@ const Side = () => {
       icon: <PiStudentFill className={`w-5 h-5 ${activeSection === 'students' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
         { name: '• Attendance', link: 'StudentAttendance' },
-        { name: '• Message', link: 'submit-homework' }
+        // { name: '• Message', link: 'submit-homework' }
       ],
       roles: ['admin', 'teacher'],
     },
@@ -103,12 +103,12 @@ const Side = () => {
       title: 'Settings',
       icon: <AiFillSetting className={`w-5 h-5 ${activeSection === 'settings' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
-        { name: '• Overview', link: 'user-overview' },
-        { name: '• Schedule', link: 'user-schedule' },
+        // { name: '• Overview', link: 'user-overview' },
+        // { name: '• Schedule', link: 'user-schedule' },
         { name: '• Resources', link: 'add-class' },
         { name: '• User Management', link: 'userTable' },
-        { name: '• Add User', link: 'Adduser' },
-        { name: '• SchoolSM', link: 'student-class-section' },
+        // { name: '• Add User', link: 'Adduser' },
+        // { name: '• SchoolSM', link: 'student-class-section' },
       ],
       roles: ['admin'],
     },

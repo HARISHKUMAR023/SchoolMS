@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Register: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -22,9 +22,9 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-       <ToastContainer />
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-full max-w-md">
+
+       
+      <form onSubmit={handleSubmit} className=" p-8 ">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Name</label>
@@ -80,7 +80,7 @@ const Register: React.FC = () => {
           Register
         </button>
       </form>
-    </div>
+  
   );
 };
 
