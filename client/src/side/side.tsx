@@ -59,6 +59,14 @@ const Side = () => {
       roles: ['admin'],
     },
     {
+      title: 'Accounting',
+      icon: <SiGoogleclassroom className={`w-5 h-5 ${activeSection === 'classes' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
+      subMenuItems: [
+        { name: '• Fess Billing', link: 'FessBilling' }
+      ],
+      roles: ['• admin', 'teacher', 'student'],
+    },
+    {
       title: 'Students',
       icon: <PiStudentFill className={`w-5 h-5 ${activeSection === 'students' ? 'text-blue-500  dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
