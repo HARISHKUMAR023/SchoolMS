@@ -12,7 +12,9 @@ export default {
         darkbg2: '#262626',
         primarybg: '#ffffff',
         primary: '#dbeafe',
+        btnprimary: '#3b82f6',
         secondary: '#ffffff',
+      
       },
 
       animation: {

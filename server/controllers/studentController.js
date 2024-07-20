@@ -24,7 +24,31 @@ exports.getsudentByTeacherid = async (req, res)=>{
 }
 
 
+// Controller to get students by class and section
+exports.getStudentsByClassAndSection = async (req, res) => {
+  const { classId, sectionId } = req.query;
+ // Validate classId and sectionId
+ if (!classId || !sectionId) {
+  return res.status(400).json({ message: 'Class ID and Section ID are required' });
+}
 
+  // Validate ObjectId
+  if (!mongoose.Types.ObjectId.isValid(classId) || !mongoose.Types.ObjectId.isValid(sectionId)) {
+    return res.status(400).json({ message: 'Invalid Class ID or Section ID' });
+  }
+
+  try {
+    const students = await Student.find({
+      class: classId,
+      section: sectionId
+    })
+
+    res.status(200).json(students);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 // Get all students
 exports.getAllStudents = async (req, res) => {
   try {

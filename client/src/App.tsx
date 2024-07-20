@@ -18,6 +18,7 @@ import PublicRoute from './components/layout/PublicRoute';
 import Mystudent from './pages/Staff/Mystudent';
 import SubmitHomework from './pages/Service/SubmitHomework';
 import Logmanagement from './pages/Logmanagement/Logmanagement';
+import FeeBillingPage from './pages/Accounting/Fessbilling';
 import Side from './side/side'
 import Info from './pages/Info/Info'
 
@@ -127,6 +128,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['admin', 'teacher']}>
             <SubmitHomework/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "FessBilling",
+        element: (
+          <ProtectedRoute allowedRoles={['admin']}>
+            <FeeBillingPage/>
           </ProtectedRoute>
         ),
       },

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Register from '../../components/UI/Auth/Register';
+import { IoCloseSharp } from "react-icons/io5";
+import { RiUserAddFill } from "react-icons/ri";
+
 
 interface User {
   _id: string;
@@ -15,10 +19,20 @@ const UserTable: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [usersPerPage] = useState<number>(10);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     fetchUsers();
   }, []);
+
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+   
+  };
+
+  const openModel = () =>{
+    setIsModalOpen(true);
+  }
 
   const fetchUsers = async () => {
     try {
@@ -59,7 +73,12 @@ const UserTable: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <ToastContainer />
+      <div className='flex justify-between'>
       <h2 className="text-2xl font-bold mb-4">Users</h2>
+      <button className='bg-btnprimary p-1 rounded font-semibold text-white flex items-center' onClick={openModel}> Create  <RiUserAddFill />
+      </button>
+      </div>
+  
       <table className="table-auto w-full">
         <thead>
           <tr>
@@ -95,6 +114,27 @@ const UserTable: React.FC = () => {
         paginate={paginate}
         currentPage={currentPage}
       />
+
+      {isModalOpen && (
+         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-end items-center z-50">
+              <div className="bg-white rounded-lg shadow-lg p-6 w-1/2 h-full">
+              <div className='flex justify-end'>
+              <button
+                onClick={closeModal}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-gray-700 "><IoCloseSharp />
+
+                </button>
+              
+              </div>
+             
+                
+           {/* <div className="bg-white rounded-lg shadow-lg p-6 w-1/2 h-full"> */}
+           <Register/>
+   
+           </div>
+          
+          </div>
+      )}
     </div>
   );
 };
