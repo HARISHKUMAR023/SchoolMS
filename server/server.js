@@ -10,6 +10,7 @@ const AttendanceRoutes = require('./routes/attendanRoutes');
 const ClassRoutes = require('./routes/ClassRoutes');
 const ClassSection = require('./routes/ClassSection');
 const HomeworkRoutes = require('./routes/Homework');
+const MenuRoutes = require('./routes/menuRoutes');
 const cors = require('cors');
 const logger = require('pino')();
 const http = require('http');
@@ -99,6 +100,8 @@ app.use('/api/classes', ClassRoutes);
 app.use('/api/class-section', ClassSection);
 app.use('/api/homework', HomeworkRoutes);
 
+// developer routes 
+app.use('/api/menu', MenuRoutes);
 dotenv.config();
 connectDB();
 const PORT = process.env.PORT || 5000;

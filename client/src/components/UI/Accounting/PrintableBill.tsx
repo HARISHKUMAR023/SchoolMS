@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../../../public/black.svg';
+import logo from '/black.svg';
 
 interface FormDetails {
   studentName: string;

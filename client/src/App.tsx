@@ -19,6 +19,7 @@ import Mystudent from './pages/Staff/Mystudent';
 import SubmitHomework from './pages/Service/SubmitHomework';
 import Logmanagement from './pages/Logmanagement/Logmanagement';
 import FeeBillingPage from './pages/Accounting/Fessbilling';
+import Menuoptions from './pages/Developeroptions/Menuoptions';
 import Side from './side/side'
 import Info from './pages/Info/Info'
 
@@ -136,6 +137,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['admin']}>
             <FeeBillingPage/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Menuoptions",
+        element: (
+          <ProtectedRoute allowedRoles={['admin']}>
+            <Menuoptions/>
           </ProtectedRoute>
         ),
       },
