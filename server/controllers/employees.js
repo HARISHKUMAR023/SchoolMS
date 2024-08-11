@@ -5,6 +5,14 @@ const Teacher = require("../models/Teacher");
 const Busdriver = require("../models/Busconductor");
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const faceapi = require('face-api.js');
+const { Canvas, Image, ImageData } = require('canvas');
+
+
+faceapi.env.monkeyPatch({ Canvas, Image, ImageData });
+
+
+
 // Import other type-specific models
 exports.getTeacherAll = async (req,res)=>{
   try {
@@ -29,9 +37,26 @@ exports.createEmployee = async (req, res) => {
     joiningDate,
     employeeType,
     typeSpecificInfo,
+    faceImage // Assuming the face image is sent as a base64 string
   } = req.body;
 
   try {
+    // Load face-api models
+    await faceapi.nets.ssdMobilenetv1.loadFromDisk('public/models');
+    await faceapi.nets.faceLandmark68Net.loadFromDisk('public/models');
+    await faceapi.nets.faceRecognitionNet.loadFromDisk('public/models');
+
+    // Create an image from base64
+    const img = new Image();
+    img.src = faceImage;
+
+    const fullFaceDescription = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
+    
+    let faceDescriptor = [];
+    if (fullFaceDescription) {
+      faceDescriptor = Array.from(fullFaceDescription.descriptor);
+    }
+
     // Create and save the Employee
     const employee = new Employee({
       name,
@@ -42,16 +67,13 @@ exports.createEmployee = async (req, res) => {
       joiningDate,
       employeeType,
       typeSpecificInfo,
+      faceDescriptor // Save the face descriptor
     });
 
     const savedEmployee = await employee.save();
 
     if (employeeType === "teacher") {
       const defaultPassword = "12345";
-      // const salt = await bcrypt.genSalt(10);
-      // const hashedPassword = await bcrypt.hash(defaultPassword, salt);
-
-      // Create and save the User
       const user = new User({
         name,
         email,
@@ -63,11 +85,10 @@ exports.createEmployee = async (req, res) => {
       const savedUser = await user.save();
       console.log("User created with default password");
 
-      // Create and save the Teacher
       const teacher = new Teacher({
         ...typeSpecificInfo,
         employeeId: savedEmployee._id,
-        userId: savedUser._id, // Add the userId to the Teacher
+        userId: savedUser._id,
       });
 
       await teacher.save();

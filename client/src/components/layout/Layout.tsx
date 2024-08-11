@@ -1,31 +1,46 @@
+import React from 'react';
+import { useLayout } from '../../context/LayoutContext'; // Adjust the path as needed
+import DefaultLayout from './DefaultLayout';
+import AlternateLayout from './AlternateLayout';
+import Offline from '../comman/Offline';
 import { useSelector } from 'react-redux';
-import Navbar from './Navbar/Navbar';
-import Footer from '../comman/Footer/Fotter';
-import { Outlet } from 'react-router-dom';
-import { RootState } from '../../Store/types';
-import Side from '../../side/side';
+import { RootState } from '../../Store/types'; // Adjust the path as needed
 
-const Layout = () => {
-  const userRole = useSelector((state: RootState) => state.auth.user?.role) || 'guest';
-  
+const Layout: React.FC = () => {
+  const { layout } = useLayout();
+  const [isOnline, setIsOnline] = React.useState(navigator.onLine);
+  const userRole = useSelector((state: RootState) => state.auth.user?.role) || 'guest'; // Retrieve userRole from the store
+
+  React.useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  if (!isOnline) {
+    return <Offline />;
+  }
+
+  const renderLayout = () => {
+    switch (layout) {
+      case 'alternate':
+        return <AlternateLayout userRole={userRole} />;
+      case 'default':
+      default:
+        return <DefaultLayout userRole={userRole} />;
+    }
+  };
+
   return (
-    <div className='h-screen flex flex-col'>
-      <div className="flex flex-1 bg-blue-300 dark:bg-darkbg2 overflow-hidden shadow">
-        <div className='w-auto p-2'>
-          <Side role={userRole} />
-        </div>
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          <div className='my-2 mr-2 rounded-md sticky top-0'>
-            <Navbar />
-          </div>
-          <div className="bg-primary/70 dark:bg-[#333333] p-3 mr-2 mb-2 rounded-md flex-1 overflow-y-auto">
-            <Outlet />
-          </div>
-        </div>
-      </div>
-      <div className='w-full border-t-[0.1px] dark:border-gray-100 border-gray-500'>
-        <Footer />
-      </div>
+    <div className="h-screen flex flex-col">
+      {renderLayout()}
     </div>
   );
 };

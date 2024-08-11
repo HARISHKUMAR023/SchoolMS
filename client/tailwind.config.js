@@ -8,13 +8,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        darkbg1: '#333333',
-        darkbg2: '#262626',
-        primarybg: '#ffffff',
-        primary: '#dbeafe',
-        btnprimary: '#3b82f6',
-        secondary: '#ffffff',
-      
+        // darkbg1: '#333333',
+        // darkbg2: '#262626',
+        //  darkbg1: '#333333',
+        //  darkbg2: '#262626',
+        // primarybg: '#ffffff',
+        // primary: '#dbeafe',
+        // btnprimary: '#3b82f6',
+        // secondary: '#ffffff',
+        primary: 'var(--primary-color)',
+        secondary: 'var(--secondary-color)',
+        background: 'var(--background-color)',
+        text: 'var(--text-color)',
+        btncolor: 'var(--btn-color)',
       },
 
       animation: {

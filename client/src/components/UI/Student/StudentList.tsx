@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import { FaEye } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-
+import LoadingModal from '../../comman/Looding/LoadingModal';
 interface Student {
   _id: string;
   photo: string;
@@ -34,10 +34,13 @@ const StudentList: React.FC = () => {
   const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
 
   useEffect(() => {
+    const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
     const fetchStudents = async () => {
+     
       try {
         const response = await axios.get('http://localhost:5000/api/students'); // Replace with your API endpoint
         setStudents(response.data);
+        await delay(2000);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -192,7 +195,8 @@ const StudentList: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen"><div className="text-xl">Loading...</div></div>;
+    return <LoadingModal show={loading} /> 
+    // return <div className="flex justify-center items-center h-screen"><div className="text-xl">Loading...</div></div>;
   }
 
   return (

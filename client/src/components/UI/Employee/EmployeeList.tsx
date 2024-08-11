@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import { FaEye } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-
+import LoadingModal from '../../comman/Looding/LoadingModal';
 interface Employee {
   _id: string;
   photo: string;
@@ -31,10 +31,12 @@ const EmployeeList: React.FC = () => {
   const [employeeToDelete, setEmployeeToDelete] = useState<Employee | null>(null);
 
   useEffect(() => {
+    const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
     const fetchEmployees = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/employees');
         setEmployees(response.data);
+        await delay(2000);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching employee data:', error);
@@ -183,7 +185,7 @@ const EmployeeList: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen"><div className="text-xl">Loading...</div></div>;
+    return <LoadingModal show={loading} /> 
   }
 
   return (

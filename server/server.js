@@ -11,6 +11,7 @@ const ClassRoutes = require('./routes/ClassRoutes');
 const ClassSection = require('./routes/ClassSection');
 const HomeworkRoutes = require('./routes/Homework');
 const MenuRoutes = require('./routes/menuRoutes');
+const CompoentsettingsRoutes = require('./routes/ComponentSettingsRoute');
 const cors = require('cors');
 const logger = require('pino')();
 const http = require('http');
@@ -39,6 +40,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 
@@ -99,7 +102,7 @@ app.use('/api/attendance', AttendanceRoutes);
 app.use('/api/classes', ClassRoutes);
 app.use('/api/class-section', ClassSection);
 app.use('/api/homework', HomeworkRoutes);
-
+app.use('/api/Compoentsettings',CompoentsettingsRoutes)
 // developer routes 
 app.use('/api/menu', MenuRoutes);
 dotenv.config();
