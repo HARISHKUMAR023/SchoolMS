@@ -9,7 +9,8 @@ const EmployeeSchema = new Schema({
   email: { type: String, required: true },
   joiningDate: { type: Date, required: true },
   employeeType: { type: String, required: true },
-  typeSpecificInfo: { type: Schema.Types.Mixed, required: true } // This can store embedded document or reference
+  typeSpecificInfo: { type: Schema.Types.Mixed, required: true }, // This can store embedded document or reference
+  faceDescriptor: { type: [Number], default: [] }
 });
 
 module.exports = mongoose.model('Employee', EmployeeSchema);

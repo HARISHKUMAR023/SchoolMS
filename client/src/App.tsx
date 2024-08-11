@@ -20,13 +20,16 @@ import SubmitHomework from './pages/Service/SubmitHomework';
 import Logmanagement from './pages/Logmanagement/Logmanagement';
 import FeeBillingPage from './pages/Accounting/Fessbilling';
 import Menuoptions from './pages/Developeroptions/Menuoptions';
+import Reports from './pages/Reports/Reports';
+import Componentssettings from './pages/Developeroptions/Componentssettings';
 import Side from './side/side'
 import Info from './pages/Info/Info'
+import { LayoutProvider } from './context/LayoutContext';
 
 const router = createBrowserRouter([
   {
     path: "/dashboard",
-    element: <Layout />,
+    element: <LayoutProvider><Layout /></LayoutProvider> ,
     children: [
       {
         path: "",
@@ -149,6 +152,22 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "Report",
+        element: (
+          <ProtectedRoute allowedRoles={['admin', 'teacher']}>
+            <Reports/>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Componetsettings",
+        element: (
+          <ProtectedRoute allowedRoles={['admin', 'teacher']}>
+            <Componentssettings/>
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "log",
         element: (
           <ProtectedRoute allowedRoles={['admin', 'teacher']}>
@@ -200,7 +219,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
+ 
       <RouterProvider router={router} />
+     
     </>
   );
 }

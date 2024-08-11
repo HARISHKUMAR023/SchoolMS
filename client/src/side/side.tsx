@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Squeeze as Hamburger } from 'hamburger-react';
-// import { AiFillHome, AiFillSetting } from "react-icons/ai";
-// import { PiStudentFill } from "react-icons/pi";
-// import { FaChalkboardTeacher } from "react-icons/fa";
-// import { MdOutlineMiscellaneousServices } from "react-icons/md";
-// import { SiGoogleclassroom } from "react-icons/si";
-// import { BiSolidReport } from "react-icons/bi";
-import { TbHexagonLetterSFilled } from "react-icons/tb";
-import { RiCodeBoxFill } from "react-icons/ri";
-import { BsFillInfoCircleFill } from "react-icons/bs";
+import { TbHexagonLetterSFilled } from 'react-icons/tb';
+import { RiCodeBoxFill } from 'react-icons/ri';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Store/types';
 import axios from 'axios';
 import './side.css';
 
@@ -28,13 +24,18 @@ interface MenuItem {
 
 interface DeveloperSetting extends MenuItem {}
 
-const Side = () => {
+// Add role to props type
+interface SideProps {
+  role: string;
+}
+
+const Side: React.FC<SideProps> = ({ role }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [activeSubSection, setActiveSubSection] = useState<string | null>(null);
   const [rippleActive, setRippleActive] = useState(false);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-
+  const userRole = useSelector((state: RootState) => state.auth.user?.role) || 'guest';
   useEffect(() => {
     fetchMenuItems();
   }, []);
@@ -76,12 +77,15 @@ const Side = () => {
     setTimeout(() => setRippleActive(false), 500);
   };
 
+  // Filter menu items based on role
+  const filteredMenuItems = menuItems.filter(item => item.roles.includes(userRole));
+
   const developerSettings: DeveloperSetting[] = [
     {
       title: 'Developer Settings',
       icon: <RiCodeBoxFill className={`w-5 h-5 ${activeSection === 'developer settings' ? 'text-blue-500 dark:text-white' : 'text-gray-600 text-lg dark:text-white/70'}`} />,
       subMenuItems: [
-        { name: '• Overview', link: 'user-overview' },
+        { name: '• Overview', link: 'Componetsettings' },
         { name: '• Menuoptions', link: 'Menuoptions' },
       ],
       roles: ['admin'],
@@ -89,15 +93,15 @@ const Side = () => {
   ];
 
   return (
-    <div className="overflow-y-auto overflow-x-hidden h-full rounded-md bg-primary/70 dark:bg-darkbg1">
+    <div className="overflow-y-auto overflow-x-hidden h-full rounded-md bg-secondary dark:bg-darkbg1">
       <div
         className={`h-full ${isExpanded ? "w-64" : "w-28"} rounded-md transition-all duration-300`}
       >
         <div className="h-full flex flex-col">
           <div id="top" className="flex items-center pt-2 backdrop-blur sticky top-0">
             <div className={`w-full flex items-center justify-center`}>
-              <TbHexagonLetterSFilled className="size-8 text-blue-500 dark:text-white" />
-              <p className={`ml-3 text-2xl font-bold text-blue-500 dark:text-white ${isExpanded ? null : "hidden"}`}>
+              <TbHexagonLetterSFilled className="size-8 text-btncolor dark:text-white" />
+              <p className={`ml-3 text-2xl font-bold  text-btncolor dark:text-white ${isExpanded ? null : "hidden"}`}>
                 School Sync
               </p>
             </div>
@@ -111,18 +115,21 @@ const Side = () => {
           </div>
 
           <div id="content" className="flex-grow flex flex-col p-2 mt-4 gap-2">
-            {menuItems.map((item, index) => (
+            {filteredMenuItems.map((item, index) => (
               <div
                 key={index}
-                className={`p-2 ${activeSection === item.title.toLowerCase() ? "active-section ripple bg-white/70 dark:bg-white/10" : "hover:bg-white/50 dark:hover:bg-white/5 cursor-pointer"} rounded-md ${rippleActive ? "ripple-active" : ""}`}
+                className={`p-2 ${activeSection === item.title.toLowerCase() ? "active-section ripple  dark:bg-white/10" : "hover:bg-white/50 dark:hover:bg-white/5 cursor-pointer"} rounded-md ${rippleActive ? "ripple-active" : ""}`}
               >
                 <div
                   id={item.title.toLowerCase()}
                   className={`${isExpanded ? "flex-row" : "flex-col"} flex items-center`}
                   onClick={() => toggleSection(item.title.toLowerCase())}
                 >
-                  {/* {item.icon} */}
-                  <p className={` ${isExpanded ? "ml-2 text-lg font-semibold" : "mt-2 text-lg font-semibold"} ${activeSection === item.title.toLowerCase() ? "text-blue-500 dark:text-white" : "text-gray-600 text-lg dark:text-white/70"}`}>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: item.icon }} className={`w-5 h-5 ${activeSection === item.title.toLowerCase() ? 'text-btncolor  dark:text-white' : 'text-white text-lg dark:text-white/70'}`}
+                  // Adjust size as needed
+                  />
+                  <p className={` ${isExpanded ? "ml-2 text-lg " : "mt-2 text-lg "} ${activeSection === item.title.toLowerCase() ? "text-white dark:text-white" : "text-white text-lg dark:text-white/70"}`}>
                     {item.title}
                   </p>
                 </div>
@@ -136,7 +143,7 @@ const Side = () => {
                       <Link
                         key={subIndex}
                         to={subItem.link}
-                        className={`${isExpanded ? "ml-2 " : "hidden text-lg"} block font-semibold ${activeSubSection === subItem.name.toLowerCase() ? "text-blue-500 dark:text-white" : "text-gray-600 dark:text-white/60 hover:text-blue-500/75 dark:hover:text-white/80"}`}
+                        className={`${isExpanded ? "ml-2 " : "hidden text-sm"} block  ${activeSubSection === subItem.name.toLowerCase() ? "bg-btncolor p-2 text-white rounded-md dark:text-white" : "text-white dark:text-white/60 hover:text-btncolor dark:hover:text-white/80"}`}
                         onClick={() => toggleSubSection(subItem.name.toLowerCase())}
                       >
                         {subItem.name}
@@ -149,7 +156,7 @@ const Side = () => {
 
             <div id='bottom' className='mt-auto'>
               {/* Developer Settings Section */}
-              {developerSettings.map((devSetting, devIndex) => (
+              {developerSettings.filter(devSetting => devSetting.roles.includes(role)).map((devSetting, devIndex) => (
                 <div
                   key={devIndex}
                   className={`p-2 space-y-2 ${activeSection === devSetting.title.toLowerCase() ? "active-section ripple bg-white/70 dark:bg-white/10" : "hover:bg-white/50 dark:hover:bg-white/5 cursor-pointer"} rounded-md ${rippleActive ? "ripple-active" : ""}`}

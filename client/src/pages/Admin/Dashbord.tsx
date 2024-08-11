@@ -14,10 +14,10 @@ interface CardData {
   count: number;
 }
 const cardData: CardData[] = [
-  { icon: <FaUserGraduate className="text-blue-500 w-10 h-10"/>, text: 'Add Students', count: 1200 },
-  { icon:< FaChalkboardTeacher className="text-blue-500 w-10 h-10"/>, text: 'Add Employess', count: 75 },
-  { icon:< FaSchool className="text-blue-500 w-10 h-10"/>, text: 'Send Message', count: 30 },
-  { icon:< FaSchool className="text-blue-500 w-10 h-10"/>, text: 'Send Message', count: 30 },
+  { icon: <FaUserGraduate className="text-btncolor w-10 h-10"/>, text: 'Add Students', count: 1200 },
+  { icon:< FaChalkboardTeacher className="text-btncolor w-10 h-10"/>, text: 'Add Employess', count: 75 },
+  { icon:< FaSchool className="text-btncolor w-10 h-10"/>, text: 'Send Message', count: 30 },
+  { icon:< FaSchool className="text-btncolor w-10 h-10"/>, text: 'Send Message', count: 30 },
 ];
 const Dashbord = () => {
 //   const authState = useSelector((state: RootState) => state.auth);
