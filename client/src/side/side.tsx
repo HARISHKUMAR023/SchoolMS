@@ -122,6 +122,10 @@ const Side = () => {
                   onClick={() => toggleSection(item.title.toLowerCase())}
                 >
                   {/* {item.icon} */}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: item.icon }} className={`w-5 h-5 ${activeSection === item.title.toLowerCase() ? 'text-blue-500  dark:text-white' : 'text-blue-500 text-lg dark:text-white/70'}`}
+                  // Adjust size as needed
+                  />
                   <p className={` ${isExpanded ? "ml-2 text-lg font-semibold" : "mt-2 text-lg font-semibold"} ${activeSection === item.title.toLowerCase() ? "text-blue-500 dark:text-white" : "text-gray-600 text-lg dark:text-white/70"}`}>
                     {item.title}
                   </p>
