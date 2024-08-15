@@ -120,7 +120,7 @@ const Login: React.FC = () => {
               className="outline-none mt-2 border-b bg-white/70 to-transparent rounded-t-md border-blue-600 focus:border-b-[1.5px] p-2 w-full"
             /><br />
             <div className='flex gap-2'>
-              <button type='submit' className='hover:bg-red-600 hover:text-white border-2 text-red-600 border-red-600 p-2 rounded-md mt-4 font-semibold w-full'>SignUp</button>
+              {/* <button type='submit' className='hover:bg-red-600 hover:text-white border-2 text-red-600 border-red-600 p-2 rounded-md mt-4 font-semibold w-full'>SignUp</button> */}
               <button type="submit" className="bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-md mt-4 font-semibold w-full">
                 Login
               </button>
